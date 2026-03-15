@@ -94,7 +94,7 @@ noBtn.style.top=y+"px"
 
 /* FLOATING HEARTS (slow) */
 
-setInterval(()=>{
+let heartInterval = setInterval(()=>{
 
 const heart = document.createElement("span")
 
