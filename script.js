@@ -218,15 +218,13 @@ teddy.style.zIndex="999"
 
 document.body.appendChild(teddy)
 
-/* teddy run across screen */
+/* teddy run */
 
 setTimeout(()=>{
-
-teddy.style.left="45%"
-
+teddy.style.left="40%"
 },100)
 
-/* teddy brings photo */
+/* teddy drop photo */
 
 setTimeout(()=>{
 
@@ -235,10 +233,11 @@ const photo=document.createElement("img")
 photo.src="photo.png"
 
 photo.style.position="fixed"
-photo.style.bottom="150px"
+photo.style.bottom="200px"
 photo.style.left="50%"
 photo.style.transform="translateX(-50%)"
-photo.style.width="200px"
+photo.style.width="220px"
+photo.style.zIndex="1000"
 photo.style.borderRadius="15px"
 photo.style.boxShadow="0 0 25px rgba(255,255,255,0.8)"
 
