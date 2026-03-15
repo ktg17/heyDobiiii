@@ -1,34 +1,50 @@
 const yesBtn = document.getElementById("yesBtn")
 const noBtn = document.getElementById("noBtn")
 const msg = document.getElementById("message")
+const music = document.getElementById("music")
 
 let noClicks = 0
 let triedNo = false
 
-yesBtn.onclick = () => {
+/* autoplay music */
 
+window.addEventListener("click", () => {
 music.play()
+},{once:true})
+
+
+/* YES button */
+
+yesBtn.onclick = () => {
 
 if(!triedNo){
 
 msg.innerHTML="Wait 😄 try clicking NO first… there is a surprise."
-
 return
 }
 
 document.body.innerHTML = `
-<div style="text-align:center;margin-top:120px">
 
-<h1>🎉 Date Confirmed 💙</h1>
+<div style="text-align:center;margin-top:120px;color:white">
 
-<img src="icecream.png" width="200">
+<h1 id="typeText"></h1>
 
-<p>Ice-cream + peaceful walk + shy smiles 😊</p>
+<img src="icecream.png" width="220">
+
+<canvas id="confetti"></canvas>
 
 </div>
+
 `
 
+typingEffect()
+startConfetti()
+iceCreamRain()
+
 }
+
+
+/* NO button */
 
 noBtn.onclick = () => {
 
@@ -72,37 +88,10 @@ noBtn.style.top=y+"px"
 
 }
 
-/* music */
 
-const music = document.getElementById("music")
-const musicBtn = document.getElementById("musicToggle")
+/* FLOATING HEARTS (slow) */
 
-musicBtn.onclick = () => {
-
-if(music.paused){
-
-music.play()
-musicBtn.innerHTML="🔇"
-
-}else{
-
-music.pause()
-musicBtn.innerHTML="🎵"
-
-}
-
-}
-
-/* floating hearts */
-
-let heartCount = 0
-
-let heartInterval = setInterval(()=>{
-
-if(heartCount > 25){
-clearInterval(heartInterval)
-return
-}
+setInterval(()=>{
 
 const heart = document.createElement("span")
 
@@ -110,10 +99,123 @@ heart.innerHTML="💙"
 
 heart.style.position="absolute"
 heart.style.left=Math.random()*100+"vw"
-heart.style.top=Math.random()*100+"vh"
+heart.style.top="100vh"
+heart.style.fontSize=(Math.random()*20+15)+"px"
+heart.style.animation="floatUp 10s linear"
 
 document.body.appendChild(heart)
 
-heartCount++
+setTimeout(()=>{
+heart.remove()
+},10000)
 
-},300)
+},1500)
+
+
+
+/* TYPING TEXT */
+
+function typingEffect(){
+
+const text="🎉 Date Confirmed 💙"
+let i=0
+
+function type(){
+
+if(i<text.length){
+
+document.getElementById("typeText").innerHTML+=text.charAt(i)
+i++
+setTimeout(type,80)
+
+}
+
+}
+
+type()
+
+}
+
+
+
+/* CONFETTI */
+
+function startConfetti(){
+
+const canvas=document.getElementById("confetti")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let confetti=[]
+
+for(let i=0;i<120;i++){
+
+confetti.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*6+2,
+d:Math.random()*50
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+confetti.forEach(c=>{
+
+ctx.beginPath()
+ctx.arc(c.x,c.y,c.r,0,Math.PI*2)
+ctx.fill()
+
+})
+
+update()
+
+}
+
+function update(){
+
+confetti.forEach(c=>{
+c.y+=2
+if(c.y>canvas.height) c.y=0
+})
+
+}
+
+setInterval(draw,20)
+
+}
+
+
+
+/* ICECREAM RAIN */
+
+function iceCreamRain(){
+
+setInterval(()=>{
+
+const ice=document.createElement("img")
+
+ice.src="icecream.png"
+
+ice.style.position="absolute"
+ice.style.left=Math.random()*100+"vw"
+ice.style.top="-50px"
+ice.style.width="40px"
+ice.style.animation="fall 6s linear"
+
+document.body.appendChild(ice)
+
+setTimeout(()=>{
+ice.remove()
+},6000)
+
+},800)
+
+}
