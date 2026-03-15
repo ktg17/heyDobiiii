@@ -23,23 +23,26 @@ msg.innerHTML="Wait 😄 try clicking NO first… there is a surprise."
 return
 }
 
-document.body.innerHTML = `
+/* hearts stop */
+clearInterval(heartInterval)
 
-<div style="text-align:center;margin-top:120px;color:white">
+/* container change (music continue रहेगा) */
 
-<h1 id="typeText"></h1>
+document.querySelector(".container").innerHTML = `
 
-<img src="icecream.png" width="220">
+<h1 style="font-size:34px;margin-top:20px;">
+So it's a date 💙
+</h1>
 
-<canvas id="confetti"></canvas>
+<img src="couple.gif" width="220">
 
-</div>
+<p style="margin-top:20px;font-size:18px;">
+Ice-cream 🍦, peaceful walk and your shy smile 😊
+</p>
 
 `
 
-typingEffect()
 startConfetti()
-iceCreamRain()
 
 }
 
