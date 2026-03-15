@@ -116,3 +116,78 @@ top:0;
 left:0;
 pointer-events:none;
 }
+
+/* glow background */
+
+.container{
+animation: glow 3s infinite alternate;
+}
+
+@keyframes glow{
+
+from{
+box-shadow:0 0 20px rgba(255,255,255,0.2);
+}
+
+to{
+box-shadow:0 0 40px rgba(0,210,255,0.8);
+}
+
+}
+
+/* heart pulse */
+
+h1{
+animation: pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+0%{transform:scale(1)}
+50%{transform:scale(1.08)}
+100%{transform:scale(1)}
+
+}
+
+/* ice cream float */
+
+.ice{
+animation: iceFloat 3s ease-in-out infinite;
+}
+
+@keyframes iceFloat{
+
+0%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+100%{transform:translateY(0)}
+
+}
+
+/* sparkle particles */
+
+.sparkles::before,
+.sparkles::after{
+
+content:"✨";
+position:absolute;
+font-size:22px;
+animation:sparkle 2s infinite alternate;
+
+}
+
+.sparkles::before{
+left:30%;
+top:20%;
+}
+
+.sparkles::after{
+right:30%;
+bottom:20%;
+}
+
+@keyframes sparkle{
+
+from{opacity:0.3;transform:scale(0.8)}
+to{opacity:1;transform:scale(1.2)}
+
+}
