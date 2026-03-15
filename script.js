@@ -51,9 +51,8 @@ Ice-cream 🍦, peaceful walk and your shy smile 😊
 <canvas id="confetti"></canvas>
 
 `
-startConfetti()
 
-setTimeout(runTeddy,2000)
+/* setTimeout(runTeddy,2000) */
 }
 
 
@@ -205,38 +204,6 @@ setInterval(draw,20)
 
 }
 
-
-function runTeddy(){
-
-const teddy = document.createElement("div")
-teddy.className="teddy"
-
-const photo = document.createElement("img")
-photo.src="photo.png"
-photo.className="teddyPhoto"
-
-teddy.appendChild(photo)
-
-document.body.appendChild(teddy)
-
-/* start run */
-
-setTimeout(()=>{
-teddy.style.left="40%"
-},100)
-
-/* drop photo */
-
-setTimeout(()=>{
-
-photo.style.bottom="180px"
-photo.style.left="50%"
-photo.style.transform="translateX(-50%)"
-photo.style.position="fixed"
-
-},6000)
-
-}
 
 // /* ICECREAM RAIN */
 
