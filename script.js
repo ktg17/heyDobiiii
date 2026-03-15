@@ -48,6 +48,8 @@ Ice-cream 🍦, peaceful walk and your shy smile 😊
 
 <div class="stars"></div>
 
+<canvas id="confetti"></canvas>
+
 `
 startConfetti()
 
