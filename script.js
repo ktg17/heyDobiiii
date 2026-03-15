@@ -241,6 +241,8 @@ photo.style.zIndex="1000"
 photo.style.borderRadius="15px"
 photo.style.boxShadow="0 0 25px rgba(255,255,255,0.8)"
 
+photo.style.zIndex="1000"
+
 document.body.appendChild(photo)
 
 },9000)
