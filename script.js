@@ -93,17 +93,25 @@ musicBtn.innerHTML="🎵"
 
 /* floating hearts */
 
-setInterval(()=>{
+let heartCount = 0
+
+let heartInterval = setInterval(()=>{
+
+if(heartCount > 25){
+clearInterval(heartInterval)
+return
+}
 
 const heart = document.createElement("span")
 
 heart.innerHTML="💙"
 
-heart.style.left = Math.random()*100+"vw"
-heart.style.fontSize = Math.random()*20+10+"px"
+heart.style.position="absolute"
+heart.style.left=Math.random()*100+"vw"
+heart.style.top=Math.random()*100+"vh"
 
 document.body.appendChild(heart)
 
-setTimeout(()=>heart.remove(),8000)
+heartCount++
 
-},500)
+},300)
