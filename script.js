@@ -58,22 +58,19 @@ music.play()
 },{once:true})
 
 
-/* YES button */
+function dateLogic(){
+
+let noClicks = 0
+
+const yesBtn = document.getElementById("yesFinal")
+const noBtn = document.getElementById("noFinal")
+const msg = document.getElementById("message")
 
 yesBtn.onclick = () => {
 
-if(!triedNo){
-
-msg.innerHTML="Wait 😄 try clicking NO first… there is a surprise."
-return
-}
-
-/* hearts stop */
 clearInterval(heartInterval)
 
 document.body.classList.add("night")
-
-/* container change (music continue रहेगा) */
 
 document.querySelector(".container").innerHTML = `
 
@@ -85,26 +82,18 @@ document.querySelector(".container").innerHTML = `
 
 <img src="icecream.png" width="200" class="ice">
 
-<img src="couple.gif" width="220" style="margin-top:10px;">
+<img src="couple.gif" width="220">
 
-<p style="margin-top:20px;font-size:18px;">
-Ice-cream 🍦, peaceful walk and your shy smile 😊
-</p>
+<p>Ice-cream 🍦, peaceful walk and your shy smile 😊</p>
 
 <div class="stars"></div>
 
-
 `
 
-/* setTimeout(runTeddy,2000) */
 }
-
-
-/* NO button */
 
 noBtn.onclick = () => {
 
-triedNo = true
 noClicks++
 
 if(noClicks==1){
@@ -127,8 +116,6 @@ msg.innerHTML="Last chance… I might share my ice-cream."
 
 else{
 
-msg.innerHTML="Okay okay you can't say NO 😝"
-
 noBtn.onmouseover = () => {
 
 let x = Math.random() * (window.innerWidth - 120)
@@ -137,6 +124,8 @@ let y = Math.random() * (window.innerHeight - 60)
 noBtn.style.position="absolute"
 noBtn.style.left=x+"px"
 noBtn.style.top=y+"px"
+
+}
 
 }
 
@@ -224,6 +213,8 @@ document.querySelector(".container").innerHTML = `
 </div>
 
 <p id="message"></p>
+
+dateLogic()
 
 `
 
