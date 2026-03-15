@@ -244,7 +244,7 @@ photo.style.boxShadow="0 0 25px rgba(255,255,255,0.8)"
 
 document.body.appendChild(photo)
 
-},7000)
+},9000)
 
 }
 
