@@ -181,17 +181,27 @@ else{
 
 msg.innerHTML="Okay okay you can't say NO 😝"
 
-/* button run */
+/* button dodge logic */
 
-let container = document.querySelector(".container")
-let rect = container.getBoundingClientRect()
+function moveButton(){
 
-let x = Math.random() * (rect.width - 120)
-let y = Math.random() * (rect.height - 60)
+let maxX = window.innerWidth - noFinal.offsetWidth - 20
+let maxY = window.innerHeight - noFinal.offsetHeight - 20
 
-noFinal.style.position="absolute"
+let x = Math.random() * maxX
+let y = Math.random() * maxY
+
+noFinal.style.position = "fixed"
 noFinal.style.left = x + "px"
 noFinal.style.top = y + "px"
+
+}
+
+/* desktop */
+noFinal.onmouseover = moveButton
+
+/* mobile */
+noFinal.onclick = moveButton
 
 }
 
