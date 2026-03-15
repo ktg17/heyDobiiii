@@ -5,7 +5,7 @@ const music = document.getElementById("music")
 
 /* MUSIC */
 
-window.addEventListener("click", () => {
+document.body.addEventListener("click", () => {
 music.play()
 },{once:true})
 
@@ -209,7 +209,7 @@ heart.style.top="100vh"
 heart.style.fontSize=(Math.random()*20+15)+"px"
 heart.style.animation="floatUp 10s linear"
 
-document.body.appendChild(heart)
+document.querySelector(".bg-hearts").appendChild(heart)
 
 setTimeout(()=>{
 heart.remove()
