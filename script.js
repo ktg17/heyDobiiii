@@ -181,7 +181,7 @@ else{
 
 msg.innerHTML="Okay okay you can't say NO 😝"
 
-noFinal.onmouseover = () => {
+/* button run */
 
 let container = document.querySelector(".container")
 let rect = container.getBoundingClientRect()
