@@ -191,3 +191,8 @@ from{opacity:0.3;transform:scale(0.8)}
 to{opacity:1;transform:scale(1.2)}
 
 }
+
+body.night{
+background: radial-gradient(circle at bottom,#0b1a2a,#000);
+overflow:hidden;
+}
