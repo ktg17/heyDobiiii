@@ -61,12 +61,24 @@ music.play()
 function dateLogic(){
 
 let noClicks = 0
+let triedNo = false
 
 const yesBtn = document.getElementById("yesFinal")
 const noBtn = document.getElementById("noFinal")
 const msg = document.getElementById("message")
 
+/* YES BUTTON */
+
 yesBtn.onclick = () => {
+
+if(!triedNo){
+
+msg.innerHTML="Wait 😄 try clicking NO first… there is a surprise."
+return
+
+}
+
+/* final slide */
 
 clearInterval(heartInterval)
 
@@ -92,8 +104,12 @@ document.querySelector(".container").innerHTML = `
 
 }
 
+
+/* NO BUTTON */
+
 noBtn.onclick = () => {
 
+triedNo = true
 noClicks++
 
 if(noClicks==1){
@@ -114,7 +130,11 @@ msg.innerHTML="Last chance… I might share my ice-cream."
 
 }
 
-else{
+else if(noClicks==4){
+
+msg.innerHTML="Okay okay you can't say NO 😝"
+
+/* button start running */
 
 noBtn.onmouseover = () => {
 
@@ -132,7 +152,6 @@ noBtn.style.top=y+"px"
 }
 
 }
-
 
 /* FLOATING HEARTS (slow) */
 
