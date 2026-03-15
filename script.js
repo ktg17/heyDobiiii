@@ -34,11 +34,15 @@ document.querySelector(".container").innerHTML = `
 So it's a date 💙
 </h1>
 
-<img src="couple.gif" width="220">
+<img src="icecream.png" width="200" style="margin-top:20px;">
+
+<img src="couple.gif" width="220" style="margin-top:10px;">
 
 <p style="margin-top:20px;font-size:18px;">
 Ice-cream 🍦, peaceful walk and your shy smile 😊
 </p>
+
+`
 
 `
 
