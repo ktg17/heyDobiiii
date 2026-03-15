@@ -203,28 +203,30 @@ setInterval(draw,20)
 
 }
 
+
 function runTeddy(){
 
 const teddy = document.createElement("img")
 teddy.src="teddy.gif"
 
-teddy.style.position="absolute"
+teddy.style.position="fixed"
 teddy.style.bottom="20px"
 teddy.style.left="-150px"
 teddy.style.width="120px"
 teddy.style.transition="8s linear"
+teddy.style.zIndex="999"
 
 document.body.appendChild(teddy)
 
-/* move teddy across screen */
+/* teddy run across screen */
 
 setTimeout(()=>{
 
-teddy.style.left="40%"
+teddy.style.left="45%"
 
 },100)
 
-/* bring photo */
+/* teddy brings photo */
 
 setTimeout(()=>{
 
@@ -232,10 +234,13 @@ const photo=document.createElement("img")
 
 photo.src="photo.png"
 
-photo.style.position="absolute"
-photo.style.bottom="120px"
-photo.style.left="45%"
-photo.style.width="160px"
+photo.style.position="fixed"
+photo.style.bottom="150px"
+photo.style.left="50%"
+photo.style.transform="translateX(-50%)"
+photo.style.width="200px"
+photo.style.borderRadius="15px"
+photo.style.boxShadow="0 0 25px rgba(255,255,255,0.8)"
 
 document.body.appendChild(photo)
 
