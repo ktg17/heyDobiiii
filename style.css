@@ -99,3 +99,20 @@ animation:float 8s linear infinite;
 100%{transform:translateY(-100vh)}
 
 }
+
+@keyframes floatUp{
+0%{transform:translateY(0)}
+100%{transform:translateY(-110vh)}
+}
+
+@keyframes fall{
+0%{transform:translateY(0)}
+100%{transform:translateY(110vh)}
+}
+
+canvas{
+position:absolute;
+top:0;
+left:0;
+pointer-events:none;
+}
