@@ -30,9 +30,11 @@ clearInterval(heartInterval)
 
 document.querySelector(".container").innerHTML = `
 
-<h1 style="font-size:34px;margin-top:20px;">
-So it's a date 💙
-</h1>
+<h1 class="dateText">So it's a date 💙</h1>
+
+<div class="loveMeter">
+<div class="loveFill"></div>
+</div>
 
 <img src="icecream.png" width="200" class="ice">
 
@@ -42,10 +44,9 @@ So it's a date 💙
 Ice-cream 🍦, peaceful walk and your shy smile 😊
 </p>
 
-<div class="sparkles"></div>
+<div class="stars"></div>
 
 `
-
 startConfetti()
 
 }
