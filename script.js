@@ -34,7 +34,7 @@ document.querySelector(".container").innerHTML = `
 So it's a date 💙
 </h1>
 
-<img src="icecream.png" width="200" style="margin-top:20px;">
+<img src="icecream.png" width="200" class="ice">
 
 <img src="couple.gif" width="220" style="margin-top:10px;">
 
@@ -42,7 +42,7 @@ So it's a date 💙
 Ice-cream 🍦, peaceful walk and your shy smile 😊
 </p>
 
-`
+<div class="sparkles"></div>
 
 `
 
