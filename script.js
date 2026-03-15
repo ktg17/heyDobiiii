@@ -3,8 +3,13 @@ const noBtn = document.getElementById("noBtn")
 const msg = document.getElementById("message")
 const music = document.getElementById("music")
 
-let noClicks = 0
-let triedNo = false
+/* MUSIC */
+
+window.addEventListener("click", () => {
+music.play()
+},{once:true})
+
+/* QUIZ QUESTIONS */
 
 const questions = [
 
@@ -17,25 +22,17 @@ const questions = [
 ]
 
 let answers = []
-let currentQuestion = -1
+let currentQuestion = 0
 
 const questionText = document.getElementById("question")
 
-function nextQuestion(){
-
-currentQuestion++
-
-if(currentQuestion < questions.length){
+function showQuestion(){
 
 questionText.innerHTML = questions[currentQuestion]
 
-}else{
-
-showResult()
-
 }
 
-}
+/* QUIZ BUTTONS */
 
 yesBtn.onclick = () => {
 
@@ -51,25 +48,77 @@ nextQuestion()
 
 }
 
-/* autoplay music */
+function nextQuestion(){
 
-window.addEventListener("click", () => {
-music.play()
-},{once:true})
+currentQuestion++
 
+if(currentQuestion < questions.length){
+
+showQuestion()
+
+}else{
+
+showResult()
+
+}
+
+}
+
+/* RESULT */
+
+function showResult(){
+
+let yesCount = answers.filter(a => a==="yes").length
+
+if(yesCount >=3){
+
+questionText.innerHTML="Looks like you enjoy sweet moments 💙"
+
+}else{
+
+questionText.innerHTML="Hmm... maybe I can still change your mind 😌"
+
+}
+
+setTimeout(showDateQuestion,2000)
+
+}
+
+/* DATE QUESTION */
+
+function showDateQuestion(){
+
+document.querySelector(".container").innerHTML = `
+
+<h1>Will you go on an ice-cream date with me? 🍦</h1>
+
+<img src="couple.gif" class="hero">
+
+<div class="buttons">
+<button id="yesFinal">Yes 💙</button>
+<button id="noFinal">No 🙈</button>
+</div>
+
+<p id="message"></p>
+
+`
+
+dateLogic()
+
+}
+
+/* FINAL DATE LOGIC */
 
 function dateLogic(){
 
 let noClicks = 0
 let triedNo = false
 
-const yesBtn = document.getElementById("yesFinal")
-const noBtn = document.getElementById("noFinal")
+const yesFinal = document.getElementById("yesFinal")
+const noFinal = document.getElementById("noFinal")
 const msg = document.getElementById("message")
 
-/* YES BUTTON */
-
-yesBtn.onclick = () => {
+yesFinal.onclick = () => {
 
 if(!triedNo){
 
@@ -78,9 +127,7 @@ return
 
 }
 
-/* final slide */
-
-clearInterval(heartInterval)
+/* FINAL PAGE */
 
 document.body.classList.add("night")
 
@@ -104,10 +151,7 @@ document.querySelector(".container").innerHTML = `
 
 }
 
-
-/* NO BUTTON */
-
-noBtn.onclick = () => {
+noFinal.onclick = () => {
 
 triedNo = true
 noClicks++
@@ -130,20 +174,18 @@ msg.innerHTML="Last chance… I might share my ice-cream."
 
 }
 
-else if(noClicks==4){
+else{
 
 msg.innerHTML="Okay okay you can't say NO 😝"
 
-/* button start running */
-
-noBtn.onmouseover = () => {
+noFinal.onmouseover = () => {
 
 let x = Math.random() * (window.innerWidth - 120)
 let y = Math.random() * (window.innerHeight - 60)
 
-noBtn.style.position="absolute"
-noBtn.style.left=x+"px"
-noBtn.style.top=y+"px"
+noFinal.style.position="absolute"
+noFinal.style.left=x+"px"
+noFinal.style.top=y+"px"
 
 }
 
@@ -153,7 +195,7 @@ noBtn.style.top=y+"px"
 
 }
 
-/* FLOATING HEARTS (slow) */
+/* FLOATING HEARTS */
 
 let heartInterval = setInterval(()=>{
 
@@ -175,95 +217,6 @@ heart.remove()
 
 },1500)
 
+/* START QUIZ */
 
-
-/* TYPING TEXT */
-
-function typingEffect(){
-
-const text="🎉 Date Confirmed 💙"
-let i=0
-
-function type(){
-
-if(i<text.length){
-
-document.getElementById("typeText").innerHTML+=text.charAt(i)
-i++
-setTimeout(type,80)
-
-}
-
-}
-
-type()
-
-}
-
-function showResult(){
-
-let yesCount = answers.filter(a => a==="yes").length
-
-if(yesCount >=3){
-
-questionText.innerHTML="Looks like you enjoy sweet moments 💙"
-
-}else{
-
-questionText.innerHTML="Hmm... maybe I can still change your mind 😌"
-
-}
-
-setTimeout(showDateQuestion,2000)
-
-}
-
-function showDateQuestion(){
-
-document.querySelector(".container").innerHTML = `
-
-<h1>Will you go on an ice-cream date with me? 🍦</h1>
-
-<img src="couple.gif" class="hero">
-
-<div class="buttons">
-<button id="yesFinal">Yes 💙</button>
-<button id="noFinal">No 🙈</button>
-</div>
-
-<p id="message"></p>
-
-`
-dateLogic()
-
-}
-  
-}
-
-nextQuestion()
-
-// /* ICECREAM RAIN */
-
-// function iceCreamRain(){
-
-// setInterval(()=>{
-
-// const ice=document.createElement("img")
-
-// ice.src="icecream.png"
-
-// ice.style.position="absolute"
-// ice.style.left=Math.random()*100+"vw"
-// ice.style.top="-50px"
-// ice.style.width="40px"
-// ice.style.animation="fall 6s linear"
-
-// document.body.appendChild(ice)
-
-// setTimeout(()=>{
-// ice.remove()
-// },6000)
-
-// },800)
-
-// }
+showQuestion()
