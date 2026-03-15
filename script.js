@@ -233,38 +233,14 @@ document.querySelector(".container").innerHTML = `
 
 <p id="message"></p>
 
+`
 dateLogic()
 
-`
-
-const yesFinal = document.getElementById("yesFinal")
-const noFinal = document.getElementById("noFinal")
-
-yesFinal.onclick = () => {
-
-document.querySelector(".container").innerHTML = `
-<h1 class="dateText">So it's a date 💙</h1>
-
-<div class="loveMeter">
-<div class="loveFill"></div>
-</div>
-
-<img src="icecream.png" width="200" class="ice">
-
-<img src="couple.gif" width="220">
-
-<p>Ice-cream 🍦, peaceful walk and your shy smile 😊</p>
-`
-
+}
+  
 }
 
-noFinal.onclick = () => {
-
-document.getElementById("message").innerHTML="Are you sure? There will be ice-cream 🍦"
-
-}
-
-}
+nextQuestion()
 
 // /* ICECREAM RAIN */
 
