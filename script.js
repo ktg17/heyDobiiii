@@ -81,7 +81,8 @@ questionText.innerHTML="Hmm... maybe I can still change your mind 😌"
 }
 
 document.querySelector(".buttons").style.display="none"
-  
+document.querySelector(".hero").style.display="none"
+
 setTimeout(showDateQuestion,2000)
 
 }
@@ -183,13 +184,14 @@ msg.innerHTML="Okay okay you can't say NO 😝"
 noFinal.onmouseover = () => {
 
 let container = document.querySelector(".container")
+let rect = container.getBoundingClientRect()
 
-let x = Math.random() * (container.clientWidth - 100)
-let y = Math.random() * (container.clientHeight - 50)
+let x = Math.random() * (rect.width - 120)
+let y = Math.random() * (rect.height - 60)
 
 noFinal.style.position="absolute"
-noFinal.style.left=x+"px"
-noFinal.style.top=y+"px"
+noFinal.style.left = x + "px"
+noFinal.style.top = y + "px"
 
 }
 
