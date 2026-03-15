@@ -12,23 +12,18 @@ if(!triedNo){
 msg.innerHTML="Wait 😄 try clicking NO first… there is a surprise."
 
 return
-
 }
 
-document.body.innerHTML =
-
+document.body.innerHTML = `
 <div style="text-align:center;margin-top:120px">
 
 <h1>🎉 Date Confirmed 💙</h1>
 
 <img src="icecream.png" width="200">
 
-<p>
-Ice-cream + peaceful walk + shy smiles 😊
-</p>
+<p>Ice-cream + peaceful walk + shy smiles 😊</p>
 
 </div>
-
 `
 
 }
