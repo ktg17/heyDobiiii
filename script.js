@@ -85,8 +85,8 @@ msg.innerHTML="Okay okay you can't say NO 😝"
 
 noBtn.onmouseover = () => {
 
-let x = Math.random()*window.innerWidth
-let y = Math.random()*window.innerHeight
+let x = Math.random() * (window.innerWidth - 120)
+let y = Math.random() * (window.innerHeight - 60)
 
 noBtn.style.position="absolute"
 noBtn.style.left=x+"px"
