@@ -51,6 +51,7 @@ Ice-cream 🍦, peaceful walk and your shy smile 😊
 `
 startConfetti()
 
+setTimeout(runTeddy,2000)
 }
 
 
@@ -202,7 +203,45 @@ setInterval(draw,20)
 
 }
 
+function runTeddy(){
 
+const teddy = document.createElement("img")
+teddy.src="teddy.gif"
+
+teddy.style.position="absolute"
+teddy.style.bottom="20px"
+teddy.style.left="-150px"
+teddy.style.width="120px"
+teddy.style.transition="8s linear"
+
+document.body.appendChild(teddy)
+
+/* move teddy across screen */
+
+setTimeout(()=>{
+
+teddy.style.left="40%"
+
+},100)
+
+/* bring photo */
+
+setTimeout(()=>{
+
+const photo=document.createElement("img")
+
+photo.src="photo.png"
+
+photo.style.position="absolute"
+photo.style.bottom="120px"
+photo.style.left="45%"
+photo.style.width="160px"
+
+document.body.appendChild(photo)
+
+},7000)
+
+}
 
 // /* ICECREAM RAIN */
 
