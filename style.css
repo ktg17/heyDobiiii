@@ -45,6 +45,11 @@ transition:0.3s;
 
 }
 
+.buttons{
+position:relative;
+z-index:5;
+}
+
 #yesBtn{
 
 background:#00d2ff;
