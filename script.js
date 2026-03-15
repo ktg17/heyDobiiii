@@ -204,8 +204,6 @@ noFinal.addEventListener("click", moveButton)
 
 }
 
-}
-
 /* FLOATING HEARTS */
 
 let heartInterval = setInterval(()=>{
