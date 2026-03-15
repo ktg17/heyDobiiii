@@ -7,6 +7,8 @@ let triedNo = false
 
 yesBtn.onclick = () => {
 
+music.play()
+
 if(!triedNo){
 
 msg.innerHTML="Wait 😄 try clicking NO first… there is a surprise."
