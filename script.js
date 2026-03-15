@@ -197,28 +197,28 @@ setInterval(draw,20)
 
 
 
-/* ICECREAM RAIN */
+// /* ICECREAM RAIN */
 
-function iceCreamRain(){
+// function iceCreamRain(){
 
-setInterval(()=>{
+// setInterval(()=>{
 
-const ice=document.createElement("img")
+// const ice=document.createElement("img")
 
-ice.src="icecream.png"
+// ice.src="icecream.png"
 
-ice.style.position="absolute"
-ice.style.left=Math.random()*100+"vw"
-ice.style.top="-50px"
-ice.style.width="40px"
-ice.style.animation="fall 6s linear"
+// ice.style.position="absolute"
+// ice.style.left=Math.random()*100+"vw"
+// ice.style.top="-50px"
+// ice.style.width="40px"
+// ice.style.animation="fall 6s linear"
 
-document.body.appendChild(ice)
+// document.body.appendChild(ice)
 
-setTimeout(()=>{
-ice.remove()
-},6000)
+// setTimeout(()=>{
+// ice.remove()
+// },6000)
 
-},800)
+// },800)
 
-}
+// }
