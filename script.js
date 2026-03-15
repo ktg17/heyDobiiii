@@ -26,6 +26,8 @@ return
 /* hearts stop */
 clearInterval(heartInterval)
 
+document.body.classList.add("night")
+
 /* container change (music continue रहेगा) */
 
 document.querySelector(".container").innerHTML = `
