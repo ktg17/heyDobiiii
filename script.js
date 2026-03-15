@@ -6,6 +6,51 @@ const music = document.getElementById("music")
 let noClicks = 0
 let triedNo = false
 
+const questions = [
+
+"Do you like ice-cream? 🍦",
+"Do you enjoy peaceful walks? 🌇",
+"Do you smile when you're happy? 😊",
+"Do you like spending time with someone special? 💙",
+"Would you like a little surprise today? 🎁"
+
+]
+
+let answers = []
+let currentQuestion = -1
+
+const questionText = document.getElementById("question")
+
+function nextQuestion(){
+
+currentQuestion++
+
+if(currentQuestion < questions.length){
+
+questionText.innerHTML = questions[currentQuestion]
+
+}else{
+
+showResult()
+
+}
+
+}
+
+yesBtn.onclick = () => {
+
+answers.push("yes")
+nextQuestion()
+
+}
+
+noBtn.onclick = () => {
+
+answers.push("no")
+nextQuestion()
+
+}
+
 /* autoplay music */
 
 window.addEventListener("click", () => {
@@ -147,7 +192,69 @@ type()
 
 }
 
+function showResult(){
 
+let yesCount = answers.filter(a => a==="yes").length
+
+if(yesCount >=3){
+
+questionText.innerHTML="Looks like you enjoy sweet moments 💙"
+
+}else{
+
+questionText.innerHTML="Hmm... maybe I can still change your mind 😌"
+
+}
+
+setTimeout(showDateQuestion,2000)
+
+}
+
+function showDateQuestion(){
+
+document.querySelector(".container").innerHTML = `
+
+<h1>Will you go on an ice-cream date with me? 🍦</h1>
+
+<img src="couple.gif" class="hero">
+
+<div class="buttons">
+<button id="yesFinal">Yes 💙</button>
+<button id="noFinal">No 🙈</button>
+</div>
+
+<p id="message"></p>
+
+`
+
+const yesFinal = document.getElementById("yesFinal")
+const noFinal = document.getElementById("noFinal")
+
+yesFinal.onclick = () => {
+
+document.querySelector(".container").innerHTML = `
+<h1 class="dateText">So it's a date 💙</h1>
+
+<div class="loveMeter">
+<div class="loveFill"></div>
+</div>
+
+<img src="icecream.png" width="200" class="ice">
+
+<img src="couple.gif" width="220">
+
+<p>Ice-cream 🍦, peaceful walk and your shy smile 😊</p>
+`
+
+}
+
+noFinal.onclick = () => {
+
+document.getElementById("message").innerHTML="Are you sure? There will be ice-cream 🍦"
+
+}
+
+}
 
 // /* ICECREAM RAIN */
 
