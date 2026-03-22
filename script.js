@@ -266,6 +266,10 @@ setTimeout(type,40)
 
 setTimeout(()=>{
 bouquet.classList.add("show")
+/* music slow */
+
+bgMusic.volume = 0.1   // very low
+
 voice.play()
 },500)
 
