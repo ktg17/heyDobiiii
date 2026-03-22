@@ -53,7 +53,7 @@ yesBtn.onclick = () => {
 
 answers.push("yes")
 
-msg.innerHTML = replies[currentQuestion].yes
+typeReply(replies[currentQuestion].yes)
 
 setTimeout(()=>{
 msg.innerHTML=""
@@ -66,7 +66,7 @@ noBtn.onclick = () => {
 
 answers.push("no")
 
-msg.innerHTML = replies[currentQuestion].no
+typeReply(replies[currentQuestion].no)
 
 setTimeout(()=>{
 msg.innerHTML=""
@@ -323,4 +323,22 @@ showDateQuestion()
 }
 
 type()
+}
+
+function typeReply(text){
+
+msg.innerHTML = ""
+
+let i = 0
+
+function type(){
+if(i < text.length){
+msg.innerHTML += text.charAt(i)
+i++
+setTimeout(type,30)
+}
+}
+
+type()
+
 }
