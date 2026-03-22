@@ -58,7 +58,7 @@ msg.innerHTML = replies[currentQuestion].yes
 setTimeout(()=>{
 msg.innerHTML=""
 nextQuestion()
-},1000)
+},3000)
 
 }
 
@@ -71,7 +71,7 @@ msg.innerHTML = replies[currentQuestion].no
 setTimeout(()=>{
 msg.innerHTML=""
 nextQuestion()
-},1000)
+},3000)
 
 }
 
