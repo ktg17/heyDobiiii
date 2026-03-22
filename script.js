@@ -22,6 +22,20 @@ const questions = [
 
 ]
 
+const replies = [
+
+{ yes: "Ice-cream lover 😄 perfect start!", no: "Ohh... I’ll change your mind someday 😏" },
+
+{ yes: "Peaceful walks + you = perfect combo 🌇", no: "No walks? okay... we’ll just sit together 😊" },
+
+{ yes: "That smile is my favorite already 😊", no: "I’ll try to make you smile then 😌" },
+
+{ yes: "Someone special huh… interesting 💙", no: "Maybe I can become that someone 😏" },
+
+{ yes: "Good… surprises are my thing 🎁", no: "Still… I might surprise you anyway 😄" }
+
+]
+
 let answers = []
 let currentQuestion = 0
 
