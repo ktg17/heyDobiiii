@@ -210,22 +210,31 @@ msg.innerHTML="Okay okay you can't say NO 😝"
 
 function moveButton(){
 
+const container = document.querySelector(".container")
+const rect = container.getBoundingClientRect()
+
 const yesRect = yesFinal.getBoundingClientRect()
 
-let x = yesRect.left + (Math.random()*120 - 60)
-let y = yesRect.top + (Math.random()*80 - 40)
+/* YES के आसपास range */
+
+let x = yesRect.left + (Math.random()*100 - 50)
+let y = yesRect.top + (Math.random()*60 - 30)
+
+/* LIMIT अंदर रखना */
+
+if(x < rect.left) x = rect.left + 10
+if(x > rect.right - 100) x = rect.right - 100
+
+if(y < rect.top) y = rect.top + 10
+if(y > rect.bottom - 50) y = rect.bottom - 50
 
 noFinal.style.position="fixed"
+
+/* smooth movement */
+noFinal.style.transition="0.3s"
+
 noFinal.style.left = x + "px"
 noFinal.style.top = y + "px"
-
-}
-
-/* desktop */
-noFinal.addEventListener("mouseover", moveButton)
-
-/* mobile */
-noFinal.addEventListener("click", moveButton)
 
 }
 
