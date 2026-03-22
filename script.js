@@ -265,24 +265,30 @@ setTimeout(type,40)
 /* bouquet + audio */
 
 setTimeout(()=>{
-bouquet.classList.add("show")
-/* music slow */
 
-bgMusic.volume = 0.1   // very low
+/* थोड़ा wait ताकि user पढ़ सके */
+setTimeout(()=>{
+
+bouquet.classList.add("show")
+
+/* music slow */
+bgMusic.volume = 0.1
 
 voice.play()
+
+/* जब audio खत्म हो */
 voice.onended = () => {
 
-/* music वापस normal */
 bgMusic.volume = 1
 
-/* cinema hide */
 document.getElementById("cinema").classList.remove("show")
 
-/* next screen */
 showDateQuestion()
 
 }
+
+},2000)   // 👉 2 second extra wait
+
 },500)
 
 }
