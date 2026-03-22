@@ -52,14 +52,26 @@ questionText.innerHTML = questions[currentQuestion]
 yesBtn.onclick = () => {
 
 answers.push("yes")
+
+msg.innerHTML = replies[currentQuestion].yes
+
+setTimeout(()=>{
+msg.innerHTML=""
 nextQuestion()
+},1000)
 
 }
 
 noBtn.onclick = () => {
 
 answers.push("no")
+
+msg.innerHTML = replies[currentQuestion].no
+
+setTimeout(()=>{
+msg.innerHTML=""
 nextQuestion()
+},1000)
 
 }
 
