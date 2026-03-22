@@ -229,3 +229,47 @@ heart.remove()
 /* START QUIZ */
 
 showQuestion()
+
+function startCinema(){
+
+const cinema = document.getElementById("cinema")
+const textBox = document.getElementById("emotionalText")
+const bouquet = document.getElementById("bouquet")
+const voice = document.getElementById("voice")
+
+cinema.classList.add("show")
+
+const text = `Sach bolu…  
+Mujhe tumse bahut si baatein karni hoti hai…  
+
+Par pata nahi kyun…  
+Jab tum saamne hoti ho…  
+Sab kuch blank ho jata hai…  
+
+Main introvert hoon na…  
+Isliye "kuch nahi" bol deta hoon…  
+
+Par sach mein…  
+bohot kuch hota hai kehne ko… 💙`
+
+let i = 0
+
+function type(){
+if(i < text.length){
+textBox.innerHTML += text.charAt(i)
+i++
+setTimeout(type,40)
+}else{
+
+/* bouquet + audio */
+
+setTimeout(()=>{
+bouquet.classList.add("show")
+voice.play()
+},500)
+
+}
+}
+
+type()
+}
