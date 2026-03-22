@@ -2,6 +2,7 @@ const yesBtn = document.getElementById("yesBtn")
 const noBtn = document.getElementById("noBtn")
 const msg = document.getElementById("message")
 const music = document.getElementById("music")
+const bgMusic = document.getElementById("music")
 
 /* MUSIC */
 
