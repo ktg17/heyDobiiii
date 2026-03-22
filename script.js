@@ -83,7 +83,7 @@ questionText.innerHTML="Hmm... maybe I can still change your mind 😌"
 document.querySelector(".buttons").style.display="none"
 document.querySelector(".hero").style.display="none"
 
-setTimeout(showDateQuestion,2000)
+setTimeout(startCinema,1500)
 
 }
 
