@@ -259,7 +259,7 @@ function type(){
 if(i < text.length){
 textBox.innerHTML += text.charAt(i)
 i++
-setTimeout(type,40)
+setTimeout(type,70)
 }else{
 
 /* bouquet + audio */
