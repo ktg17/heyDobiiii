@@ -215,12 +215,8 @@ const rect = container.getBoundingClientRect()
 
 const yesRect = yesFinal.getBoundingClientRect()
 
-/* YES के आसपास range */
-
 let x = yesRect.left + (Math.random()*100 - 50)
 let y = yesRect.top + (Math.random()*60 - 30)
-
-/* LIMIT अंदर रखना */
 
 if(x < rect.left) x = rect.left + 10
 if(x > rect.right - 100) x = rect.right - 100
@@ -229,12 +225,16 @@ if(y < rect.top) y = rect.top + 10
 if(y > rect.bottom - 50) y = rect.bottom - 50
 
 noFinal.style.position="fixed"
-
-/* smooth movement */
 noFinal.style.transition="0.3s"
-
 noFinal.style.left = x + "px"
 noFinal.style.top = y + "px"
+
+}
+
+/* ✅ YE PART ADD KARNA HAI */
+noFinal.addEventListener("mouseover", moveButton)
+noFinal.addEventListener("click", moveButton)
+noFinal.addEventListener("touchstart", moveButton)
 
 }
 
