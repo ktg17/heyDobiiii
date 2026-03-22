@@ -335,7 +335,7 @@ function type(){
 if(i < text.length){
 msg.innerHTML += text.charAt(i)
 i++
-setTimeout(type,30)
+setTimeout(type,60)
 }
 }
 
