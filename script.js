@@ -271,6 +271,18 @@ bouquet.classList.add("show")
 bgMusic.volume = 0.1   // very low
 
 voice.play()
+voice.onended = () => {
+
+/* music वापस normal */
+bgMusic.volume = 1
+
+/* cinema hide */
+document.getElementById("cinema").classList.remove("show")
+
+/* next screen */
+showDateQuestion()
+
+}
 },500)
 
 }
