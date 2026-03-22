@@ -184,8 +184,10 @@ msg.innerHTML="Okay okay you can't say NO 😝"
 
 function moveButton(){
 
-let x = Math.random() * (window.innerWidth - 120)
-let y = Math.random() * (window.innerHeight - 60)
+const yesRect = yesFinal.getBoundingClientRect()
+
+let x = yesRect.left + (Math.random()*120 - 60)
+let y = yesRect.top + (Math.random()*80 - 40)
 
 noFinal.style.position="fixed"
 noFinal.style.left = x + "px"
