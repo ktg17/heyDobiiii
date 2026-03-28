@@ -1,56 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
-<title>Ice Cream Date</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ice Cream Date 🍦</title>
 <link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
+<!-- Particle canvas -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- Floating hearts background -->
 <div class="bg-hearts"></div>
 
-<div class="container">
+<!-- Cursor trail -->
+<div id="cursorTrail"></div>
 
-<h1 id="question">Ready for a small fun quiz? 😄</h1>
-
-<img src="couple.gif" class="hero">
-
-<div class="buttons">
-
-<button id="yesBtn">Yes 💙</button>
-<button id="noBtn">No 🙈</button>
-
+<!-- Main container -->
+<div class="container" id="mainContainer">
+  <div class="glass-inner">
+    <h1 id="question" class="fadeInUp">Ready for a small fun quiz? 😄</h1>
+    <img src="couple.gif" class="hero fadeInUp delay1">
+    <div class="buttons fadeInUp delay2">
+      <button id="yesBtn" class="btn-yes">Yes 💙</button>
+      <button id="noBtn" class="btn-no">No 🙈</button>
+    </div>
+    <p id="message"></p>
+  </div>
 </div>
 
+<!-- Cinema mode -->
 <div id="cinema" class="hidden">
-
+  <div class="cinema-bg"></div>
   <div id="emotionalText"></div>
-
+  <div class="cursor-blink" id="cursor">|</div>
   <img src="bouquet.png" id="bouquet">
-
-  <audio id="voice">
-    <source src="voice.mp3">
-  </audio>
-
-</div>  
-
-<p id="message"></p>
-
+  <audio id="voice"><source src="voice.mp3"></audio>
 </div>
 
-<button id="musicToggle">🎵</button>
+<!-- Music button -->
+<button id="musicToggle" title="Toggle Music">🎵</button>
 
-<audio id="music" loop>
-<source src="music.mp3">
-</audio>
+<!-- Music -->
+<audio id="music" loop><source src="music.mp3"></audio>
 
 <script src="script.js"></script>
-
 </body>
 </html>
