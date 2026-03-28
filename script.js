@@ -301,19 +301,13 @@ function startCinema() {
       setTimeout(() => {
         setTimeout(() => {
           bouquet.classList.add("show")
-          bgMusic.volume = 0.1
-          voice.play().catch(() => {
+          bgMusic.volume = 0.3
             setTimeout(() => {
               bgMusic.volume = 0.5
               cinema.classList.remove("show")
               setTimeout(showDateQuestion, 1200)
-            }, 3000)
+            }, 4000)
           })
-          voice.onended = () => {
-            bgMusic.volume = 0.5
-            cinema.classList.remove("show")
-            setTimeout(showDateQuestion, 1200)
-          }
         }, 2000)
       }, 500)
     }
