@@ -1,9 +1,5 @@
 /* ============================================
-   ICE CREAM DATE — v3
-   - Custom option buttons per question (no more Yes/No)
-   - No button shrinks each click, Yes grows
-   - 4th click = crying emoji on No button
-   - All previous features retained
+   ICE CREAM DATE — v3 FIXED
    ============================================ */
 
 /* === ELEMENTS === */
@@ -79,10 +75,10 @@ function addRipple(btn) {
 /* === PARTICLE SYSTEM === */
 const canvas = document.getElementById("particleCanvas")
 const ctx    = canvas.getContext("2d")
-canvas.width = window.innerWidth
+canvas.width  = window.innerWidth
 canvas.height = window.innerHeight
 window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth
+  canvas.width  = window.innerWidth
   canvas.height = window.innerHeight
 })
 const particles = []
@@ -124,10 +120,7 @@ let heartInterval = setInterval(() => {
   setTimeout(() => heart.remove(), 13000)
 }, 1800)
 
-/* ============================================
-   QUIZ DATA
-   Each question: text, optA, optB, replyA, replyB
-   ============================================ */
+/* === QUIZ DATA === */
 const questions = [
   {
     text:   "If it's raining outside, what's your vibe? ☔",
@@ -204,7 +197,7 @@ function updateDots(index) {
   })
 }
 
-/* === SHOW QUESTION WITH CUSTOM OPTION BUTTONS === */
+/* === SHOW QUESTION === */
 function showQuestion() {
   const q = questions[currentQuestion]
 
@@ -280,7 +273,6 @@ function startCinema() {
   const cinema  = document.getElementById("cinema")
   const textBox = document.getElementById("emotionalText")
   const bouquet = document.getElementById("bouquet")
-  const voice   = document.getElementById("voice")
   const cursor  = document.getElementById("cursor")
 
   clearInterval(heartInterval)
@@ -297,24 +289,18 @@ function startCinema() {
       i++
       setTimeout(type, 65)
     } else {
+      // Typing done — hide cursor
       setTimeout(() => { cursor.style.display = "none" }, 500)
+      // Wait, then show bouquet and move to date question
       setTimeout(() => {
+        bouquet.classList.add("show")
+        bgMusic.volume = 0.3
         setTimeout(() => {
-          bouquet.classList.add("show")
-          bgMusic.volume = 0.3
-            setTimeout(() => {
-              bgMusic.volume = 0.5
-              cinema.classList.remove("show")
-              setTimeout(showDateQuestion, 1200)
-            }, 4000)
-          })
-          voice.onended = () => {
-            bgMusic.volume = 0.5
-            cinema.classList.remove("show")
-            setTimeout(showDateQuestion, 1200)
-          }
-        }, 2000)
-      }, 500)
+          bgMusic.volume = 0.5
+          cinema.classList.remove("show")
+          setTimeout(showDateQuestion, 1200)
+        }, 4000)
+      }, 2000)
     }
   }
   type()
@@ -362,12 +348,11 @@ function dateLogic() {
 
   const yesFinal = document.getElementById("yesFinal")
   const noFinal  = document.getElementById("noFinal")
-  const msgEl    = document.getElementById("message")
 
   yesFinal.onclick = () => {
     if (!triedNo) {
-    const freshMsg = document.getElementById("message")
-    typeReply2(freshMsg, "Wait 😄 try clicking NO first… there is a surprise.")
+      const freshMsg = document.getElementById("message")
+      typeReply2(freshMsg, "Wait 😄 try clicking NO first… there is a surprise.")
       return
     }
     showFinalPage()
@@ -377,7 +362,7 @@ function dateLogic() {
     triedNo = true
     noClicks++
 
-    /* Shrink No button, grow Yes button */
+    /* Shrink No, Grow Yes */
     noScale  = Math.max(0.40, noScale  - 0.18)
     yesScale = Math.min(1.60, yesScale + 0.15)
 
@@ -396,21 +381,21 @@ function dateLogic() {
     const freshMsg = document.getElementById("message")
     typeReply2(freshMsg, lines[Math.min(noClicks - 1, 3)])
 
-    /* 4th click → crying emoji appears above No button */
+    /* 4th click → crying emoji on No button */
     if (noClicks === 4) {
       noFinal.style.position = "relative"
-
-      const cry = document.createElement("span")
-      cry.id = "cryEmoji"
-      cry.innerHTML = "😢"
-      cry.style.cssText = `
-        position:absolute; top:-24px; left:50%;
-        transform:translateX(-50%);
-        font-size:22px; pointer-events:none;
-        animation:cryBounce 0.5s ease infinite alternate;
-      `
-      noFinal.appendChild(cry)
-
+      if (!document.getElementById("cryEmoji")) {
+        const cry = document.createElement("span")
+        cry.id = "cryEmoji"
+        cry.innerHTML = "😢"
+        cry.style.cssText = `
+          position:absolute; top:-24px; left:50%;
+          transform:translateX(-50%);
+          font-size:22px; pointer-events:none;
+          animation:cryBounce 0.5s ease infinite alternate;
+        `
+        noFinal.appendChild(cry)
+      }
       if (!document.getElementById("cryStyle")) {
         const s = document.createElement("style")
         s.id = "cryStyle"
@@ -424,7 +409,7 @@ function dateLogic() {
       }
     }
 
-    /* 5th click onwards → No button runs away, orbiting Yes */
+    /* 5th click onwards → No button orbits Yes */
     if (noClicks >= 5) {
       moveNoButton()
       noFinal.onmouseover  = moveNoButton
