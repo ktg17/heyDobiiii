@@ -154,19 +154,39 @@ let heartInterval = setInterval(() => {
 
 /* === QUIZ DATA === */
 const questions = [
-  "Do you like ice-cream? 🍦",
-  "Do you enjoy peaceful walks? 🌇",
-  "Do you smile when you're happy? 😊",
-  "Do you like spending time with someone special? 💙",
-  "Would you like a little surprise today? 🎁"
+  "If it's raining outside, what's your vibe? ☔",
+  "Someone saves you the window seat… how do you feel? 🪟",
+  "You get an unexpected text saying 'I was thinking about you'… your reaction? 💬",
+  "Ideal evening: cozy café corner with soft music, or rooftop with city lights? ✨",
+  "Someone remembers your small details — your fav flavor, your quiet moods… does that mean something to you? 🍦",
+  "Last one — do you believe some connections are just… different? 💙"
 ]
 
 const replies = [
-  { yes: "Ice-cream lover 😄 perfect start!",            no: "Ohh... I'll change your mind someday 😏" },
-  { yes: "Peaceful walks + you = perfect combo 🌇",      no: "No walks? okay... we'll just sit together 😊" },
-  { yes: "That smile is my favorite already 😊",         no: "I'll try to make you smile then 😌" },
-  { yes: "Someone special huh… interesting 💙",          no: "Maybe I can become that someone 😏" },
-  { yes: "Good… surprises are my thing 🎁",              no: "Still… I might surprise you anyway 😄" }
+  {
+    yes: "Hot chocolate, a blanket and good company... I like how you think ☁️",
+    no:  "Bold! Rain-walker energy. I respect that 😄"
+  },
+  {
+    yes: "That tiny gesture matters more than people admit, doesn't it 🪟",
+    no:  "Aisle seat gang — I get it, freedom matters 😄"
+  },
+  {
+    yes: "That little pause before replying… I saw that 😌",
+    no:  "Okay okay, cool and composed. Noted 😏"
+  },
+  {
+    yes: "City lights it is... soft music playing, warm cup, and someone worth talking to 💫",
+    no:  "Cozy corner person — the best kind honestly 🫶"
+  },
+  {
+    yes: "See... that's the thing. Small details are how people really listen 💙",
+    no:  "Fair enough — but what if someone already does? 😌"
+  },
+  {
+    yes: "Yeah. Some people just feel like home 💙",
+    no:  "Maybe you haven't met that connection yet... 😌"
+  }
 ]
 
 let answers        = []
@@ -280,7 +300,7 @@ function startCinema() {
   cinema.classList.remove("hidden")
   requestAnimationFrame(() => cinema.classList.add("show"))
 
-  const text = `Sach bolu…\n\nMujhe tumse bahut si baatein karni hoti hai…\n\nPar pata nahi kyun…\nJab tum saamne hoti ho…\nSab kuch blank ho jata hai…\n\nMain introvert hoon na…\nIsliye "kuch nahi" bol deta hoon…\n\nPar sach mein…\nbohot kuch hota hai kehne ko… 💙`
+  const text = `Tumse ek baat kehni thi…\n\nWo baat jo main roz sochta hoon,\npar words kabhi sahi nahi aate…\n\nTum jab paas hoti ho —\nkuch ajeeb sa hota hai.\nDil kuch kehna chahta hai,\npar zubaan ruk jaati hai.\n\nYe jo khamoshi hai na mere paas…\nismein bohot kuch chhupta hai.\n\nMain introvert hoon —\nlekin tum woh hoti ho jiske liye\nmain dhoondne ki koshish karta hoon\nsahi words…\n\nIs baar dhundh liye. 💙`
 
   let i = 0
 
@@ -413,15 +433,29 @@ function dateLogic() {
   }
 
   function moveNoButton() {
-    const margin = 10
-    const maxX = window.innerWidth  - noFinal.offsetWidth  - margin
-    const maxY = window.innerHeight - noFinal.offsetHeight - margin
+    const yesRect = yesFinal.getBoundingClientRect()
+    const cx = yesRect.left + yesRect.width  / 2
+    const cy = yesRect.top  + yesRect.height / 2
+
+    // Random angle, radius between 120px and 220px around Yes button
+    const angle  = Math.random() * 2 * Math.PI
+    const radius = 130 + Math.random() * 90
+
+    let nx = cx + Math.cos(angle) * radius - noFinal.offsetWidth  / 2
+    let ny = cy + Math.sin(angle) * radius - noFinal.offsetHeight / 2
+
+    // Clamp so button stays fully on screen
+    const pad = 8
+    nx = Math.max(pad, Math.min(window.innerWidth  - noFinal.offsetWidth  - pad, nx))
+    ny = Math.max(pad, Math.min(window.innerHeight - noFinal.offsetHeight - pad, ny))
 
     noFinal.style.position   = "fixed"
-    noFinal.style.transition = "0.25s cubic-bezier(0.34,1.56,0.64,1)"
-    noFinal.style.left = Math.max(margin, Math.random() * maxX) + "px"
-    noFinal.style.top  = Math.max(margin, Math.random() * maxY) + "px"
-    noFinal.style.zIndex = "50"
+    noFinal.style.transition = "0.3s cubic-bezier(0.34,1.56,0.64,1)"
+    noFinal.style.left       = nx + "px"
+    noFinal.style.top        = ny + "px"
+    noFinal.style.zIndex     = "200"
+    noFinal.style.visibility = "visible"
+    noFinal.style.opacity    = "1"
   }
 }
 
