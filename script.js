@@ -367,7 +367,8 @@ function dateLogic() {
 
   yesFinal.onclick = () => {
     if (!triedNo) {
-      typeReply2(msgEl, "Wait 😄 try clicking NO first… there is a surprise.")
+    const freshMsg = document.getElementById("message")
+    typeReply2(freshMsg, "Wait 😄 try clicking NO first… there is a surprise.")
       return
     }
     showFinalPage()
@@ -393,7 +394,8 @@ function dateLogic() {
       "Last chance… I might share my ice-cream 🥺",
       "Okay okay… 😢"
     ]
-    typeReply2(msgEl, lines[Math.min(noClicks - 1, 3)])
+    const freshMsg = document.getElementById("message")
+    typeReply2(freshMsg, lines[Math.min(noClicks - 1, 3)])
 
     /* 4th click → crying emoji appears above No button */
     if (noClicks === 4) {
@@ -507,10 +509,14 @@ function typeReply(text) {
 }
 
 function typeReply2(el, text) {
-  el.innerHTML = ""
+  el.textContent = ""
   let i = 0
   function type() {
-    if (i < text.length) { el.innerHTML += text.charAt(i); i++; setTimeout(type, 55) }
+    if (i < text.length) {
+      el.textContent += text.charAt(i)
+      i++
+      setTimeout(type, 55)
+    }
   }
   type()
 }
