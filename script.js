@@ -308,6 +308,11 @@ function startCinema() {
               setTimeout(showDateQuestion, 1200)
             }, 4000)
           })
+          voice.onended = () => {
+            bgMusic.volume = 0.5
+            cinema.classList.remove("show")
+            setTimeout(showDateQuestion, 1200)
+          }
         }, 2000)
       }, 500)
     }
