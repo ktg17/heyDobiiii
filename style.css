@@ -11,7 +11,6 @@
   --text-soft: rgba(255,255,255,0.7);
 }
 
-/* === RESET & BASE === */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -27,18 +26,7 @@ body {
   cursor: none;
 }
 
-/* === CUSTOM CURSOR === */
-body::after {
-  content: '💙';
-  position: fixed;
-  pointer-events: none;
-  font-size: 18px;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s;
-  id: customCursor;
-}
-
+/* === CURSOR TRAIL === */
 #cursorTrail {
   position: fixed;
   pointer-events: none;
@@ -69,12 +57,6 @@ body::after {
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
-}
-
-.bg-hearts span {
-  position: absolute;
-  animation: floatUp linear forwards;
-  opacity: 0.6;
 }
 
 @keyframes floatUp {
@@ -114,14 +96,11 @@ body::after {
   overflow: hidden;
 }
 
-/* Shimmer sweep effect */
 .glass-inner::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -60%;
-  width: 40%;
-  height: 200%;
+  top: -50%; left: -60%;
+  width: 40%; height: 200%;
   background: linear-gradient(105deg, transparent, rgba(255,255,255,0.04), transparent);
   animation: shimmer 6s linear infinite;
 }
@@ -176,10 +155,10 @@ h1 {
 }
 
 button {
-  padding: 14px 32px;
+  padding: 14px 28px;
   border: none;
   border-radius: 50px;
-  font-size: 17px;
+  font-size: 16px;
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
   cursor: pointer;
@@ -188,20 +167,9 @@ button {
   transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
 }
 
-button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0);
-  transition: background 0.2s;
-}
-
-button:hover::after { background: rgba(255,255,255,0.1); }
-
 button:active { transform: scale(0.95) !important; }
 
-/* Ripple */
-button .ripple {
+.ripple {
   position: absolute;
   border-radius: 50%;
   background: rgba(255,255,255,0.35);
@@ -248,8 +216,7 @@ button .ripple {
 /* === MUSIC TOGGLE === */
 #musicToggle {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 20px; right: 20px;
   background: var(--glass);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(10px);
@@ -258,19 +225,19 @@ button .ripple {
   cursor: pointer;
   font-size: 18px;
   z-index: 100;
-  transition: transform 0.3s, background 0.3s;
+  transition: transform 0.3s;
+  color: white;
 }
 
 #musicToggle:hover { transform: scale(1.15) rotate(15deg); }
 #musicToggle.muted { opacity: 0.5; }
 
-/* === FADE IN ANIMATIONS === */
+/* === FADE IN === */
 .fadeInUp {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUp 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
 }
-
 .delay1 { animation-delay: 0.2s; }
 .delay2 { animation-delay: 0.4s; }
 
@@ -288,7 +255,7 @@ button .ripple {
   justify-content: center;
   align-items: center;
   z-index: 999;
-  opacity: 0;
+  opacity: 0;                /* hidden by default */
   pointer-events: none;
   transition: opacity 1.2s ease;
 }
@@ -298,9 +265,6 @@ button .ripple {
   pointer-events: auto;
 }
 
-#cinema.hidden { display: none; }
-
-/* Subtle vignette */
 #cinema::before {
   content: '';
   position: absolute;
@@ -315,12 +279,6 @@ button .ripple {
   background:
     radial-gradient(circle at 20% 50%, rgba(167,139,250,0.06) 0%, transparent 60%),
     radial-gradient(circle at 80% 50%, rgba(0,210,255,0.06) 0%, transparent 60%);
-  animation: cinemaBgShift 8s ease-in-out infinite alternate;
-}
-
-@keyframes cinemaBgShift {
-  from { opacity: 0.5; }
-  to   { opacity: 1; }
 }
 
 #emotionalText {
@@ -346,7 +304,6 @@ button .ripple {
 
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
-/* Bouquet */
 #bouquet {
   position: absolute;
   bottom: -200px;
@@ -393,7 +350,7 @@ button .ripple {
   to   { width: 100%; }
 }
 
-/* === FINAL / DATE PAGE === */
+/* === FINAL PAGE === */
 .dateText {
   font-family: 'Playfair Display', serif;
   font-size: clamp(28px, 6vw, 40px);
@@ -409,7 +366,6 @@ button .ripple {
   to   { filter: drop-shadow(0 0 30px rgba(167,139,250,0.8)); }
 }
 
-/* === ICE CREAM === */
 .ice {
   animation: iceFloat 3s ease-in-out infinite;
   filter: drop-shadow(0 8px 20px rgba(0,210,255,0.3));
@@ -425,7 +381,7 @@ body.night {
   background: radial-gradient(ellipse at bottom, #0b1a2a 0%, #000 100%);
 }
 
-/* === STARS on final page === */
+/* === STARS === */
 .stars {
   position: absolute;
   inset: 0;
@@ -447,11 +403,9 @@ body.night {
   100% { transform: translate(350px, 180px) scale(0.3); opacity: 0; }
 }
 
-/* === CONFETTI (JS injects .confetti-piece) === */
+/* === CONFETTI === */
 .confetti-piece {
   position: fixed;
-  width: 10px;
-  height: 10px;
   top: -10px;
   border-radius: 2px;
   animation: confettiFall linear forwards;
@@ -464,7 +418,7 @@ body.night {
   100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
 }
 
-/* === QUESTION TRANSITION === */
+/* === QUESTION TRANSITIONS === */
 .question-exit {
   animation: qExit 0.4s ease forwards;
 }
@@ -491,8 +445,7 @@ body.night {
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 8px; height: 8px;
   border-radius: 50%;
   background: rgba(255,255,255,0.2);
   transition: background 0.4s, transform 0.4s;
@@ -507,4 +460,46 @@ body.night {
 .dot.done {
   background: var(--accent2);
   transform: scale(1.1);
+}
+
+/* === DATE TIMER BOX === */
+.date-timer {
+  margin-top: 24px;
+  padding: 16px 24px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.timer-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.8;
+  font-style: italic;
+}
+
+/* === STORY BOX === */
+#storyBox { padding: 10px; text-align: center; }
+
+#storyText {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(15px, 3vw, 20px);
+  line-height: 2;
+  color: white;
+  text-shadow: 0 0 30px rgba(167,139,250,0.4);
+  max-height: 60vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#storyText::-webkit-scrollbar { display: none; }
+
+#storyCursor {
+  display: inline-block;
+  color: var(--accent2);
+  font-size: 22px;
+  animation: blink 0.9s step-end infinite;
+  margin-top: 8px;
 }
