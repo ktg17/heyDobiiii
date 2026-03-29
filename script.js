@@ -45,12 +45,12 @@ function spawnCursorHeart(x, y) {
     position:fixed; left:${x}px; top:${y}px;
     font-size:${10+Math.random()*10}px;
     pointer-events:none; z-index:9997;
-    transition:transform 0.8s ease,opacity 0.8s ease;
+    transition:transform 0.8s ease, opacity 0.8s ease;
     transform:translate(-50%,-50%); opacity:0.8;
   `
   document.body.appendChild(h)
   requestAnimationFrame(() => {
-    h.style.transform = `translate(${-50+(Math.random()*60-30)}%,${-150+Math.random()*(-50)}%)`
+    h.style.transform = `translate(${-50+(Math.random()*60-30)}%, ${-150+Math.random()*(-50)}%)`
     h.style.opacity = "0"
   })
   setTimeout(() => h.remove(), 900)
@@ -93,10 +93,12 @@ for (let i = 0; i < 60; i++) {
 function drawParticles() {
   ctx.clearRect(0,0,canvas.width,canvas.height)
   particles.forEach(p => {
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
-    ctx.fillStyle = `rgba(${p.color},${p.alpha})`; ctx.fill()
-    p.x+=p.dx; p.y+=p.dy
-    if(p.x<0||p.x>canvas.width) p.dx*=-1
+    ctx.beginPath()
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2)
+    ctx.fillStyle = `rgba(${p.color},${p.alpha})`
+    ctx.fill()
+    p.x += p.dx; p.y += p.dy
+    if(p.x<0||p.x>canvas.width)  p.dx*=-1
     if(p.y<0||p.y>canvas.height) p.dy*=-1
     p.alpha += (Math.random()-0.5)*0.02
     p.alpha = Math.max(0.1, Math.min(0.7, p.alpha))
@@ -119,9 +121,7 @@ let heartInterval = setInterval(() => {
   setTimeout(() => heart.remove(), 13000)
 }, 1800)
 
-/* ============================================
-   QUIZ — Personalized for Dobi
-   ============================================ */
+/* === QUIZ DATA === */
 const questions = [
   {
     text:   "Ek rainy evening… Dobi ka mood kaisa hoga? ☔",
@@ -207,10 +207,10 @@ function showQuestion() {
   questionText.classList.add("question-enter")
 
   const buttonsDiv = document.querySelector(".buttons")
-  buttonsDiv.style.display = ""
+  buttonsDiv.style.display = "flex"
   buttonsDiv.innerHTML = `
-    <button id="optA" class="btn-yes opt-btn">${q.optA}</button>
-    <button id="optB" class="btn-no opt-btn">${q.optB}</button>
+    <button id="optA" class="btn-yes">${q.optA}</button>
+    <button id="optB" class="btn-no">${q.optB}</button>
   `
   addRipple(document.getElementById("optA"))
   addRipple(document.getElementById("optB"))
@@ -258,9 +258,7 @@ function showResult() {
   setTimeout(showMiniStory, 1600)
 }
 
-/* ============================================
-   MINI LOVE STORY
-   ============================================ */
+/* === MINI LOVE STORY === */
 function showMiniStory() {
   const glassInner = document.querySelector(".glass-inner")
   glassInner.innerHTML = `
@@ -269,23 +267,6 @@ function showMiniStory() {
       <div id="storyCursor">|</div>
     </div>
   `
-
-  const style = document.createElement("style")
-  style.textContent = `
-    #storyBox { padding:10px; text-align:center; }
-    #storyText {
-      font-family:'Playfair Display',serif;
-      font-size:clamp(16px,3.5vw,22px);
-      line-height:2; color:white;
-      text-shadow:0 0 30px rgba(167,139,250,0.4);
-    }
-    #storyCursor {
-      display:inline-block; color:#a78bfa;
-      font-size:22px; animation:blink 0.9s step-end infinite; margin-top:8px;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-  `
-  document.head.appendChild(style)
 
   const storyLines = [
     "Sab kuch shuru hua ek Instagram DM se… 📩",
@@ -325,10 +306,7 @@ function showMiniStory() {
   function typeLine(line, cb) {
     let i = 0
     const p = document.createElement("p")
-    p.style.margin = "4px 0"
-    p.style.opacity = "0"
-    p.style.transform = "translateY(8px)"
-    p.style.transition = "opacity 0.5s, transform 0.5s"
+    p.style.cssText = "margin:4px 0; opacity:0; transform:translateY(8px); transition:opacity 0.5s, transform 0.5s;"
     storyTextEl.appendChild(p)
     requestAnimationFrame(() => {
       p.style.opacity = "1"
@@ -338,9 +316,11 @@ function showMiniStory() {
       if (i < line.length) {
         p.textContent += line.charAt(i)
         i++
-        setTimeout(typeChar, 55)
+        // Auto scroll
+        storyTextEl.scrollTop = storyTextEl.scrollHeight
+        setTimeout(typeChar, 50)
       } else {
-        setTimeout(cb, 600)
+        setTimeout(cb, 500)
       }
     }
     typeChar()
@@ -366,18 +346,38 @@ function startCinema() {
   const cursor  = document.getElementById("cursor")
 
   clearInterval(heartInterval)
-  cinema.classList.remove("hidden")
-  requestAnimationFrame(() => cinema.classList.add("show"))
 
-  const text = `Dobi…\n\nTumse ek baat kehni thi.\n\nWo baat jo main roz sochta hoon,\npar words kabhi sahi nahi aate…\n\nTum jab paas hoti ho —\nkuch ajeeb sa hota hai.\nDil kuch kehna chahta hai,\npar zubaan ruk jaati hai.\n\nYe jo khamoshi hai na mere paas…\nismein bohot kuch chhupta hai.\n\nMain introvert hoon —\nlekin tum woh hoti ho jiske liye\nmain dhoondne ki koshish karta hoon\nsahi words…\n\nIs baar dhundh liye. 💙`
+  // Show cinema
+  cinema.classList.add("show")
 
-  let i = 0
-  function type() {
-    if (i < text.length) {
-      textBox.innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i)
-      i++
-      setTimeout(type, 65)
-    } else {
+  const text = [
+    "Dobi…",
+    "",
+    "Tumse ek baat kehni thi.",
+    "",
+    "Wo baat jo main roz sochta hoon,",
+    "par words kabhi sahi nahi aate…",
+    "",
+    "Tum jab paas hoti ho —",
+    "kuch ajeeb sa hota hai.",
+    "Dil kuch kehna chahta hai,",
+    "par zubaan ruk jaati hai.",
+    "",
+    "Ye jo khamoshi hai na mere paas…",
+    "ismein bohot kuch chhupta hai.",
+    "",
+    "Main introvert hoon —",
+    "lekin tum woh hoti ho jiske liye",
+    "main dhoondne ki koshish karta hoon",
+    "sahi words…",
+    "",
+    "Is baar dhundh liye. 💙"
+  ]
+
+  let lineIdx = 0
+
+  function typeNextLine() {
+    if (lineIdx >= text.length) {
       setTimeout(() => { cursor.style.display = "none" }, 500)
       setTimeout(() => {
         bouquet.classList.add("show")
@@ -388,9 +388,33 @@ function startCinema() {
           setTimeout(showDateQuestion, 1200)
         }, 4000)
       }, 2000)
+      return
     }
+
+    const line = text[lineIdx]
+    lineIdx++
+
+    if (line === "") {
+      textBox.innerHTML += "<br>"
+      setTimeout(typeNextLine, 300)
+      return
+    }
+
+    let i = 0
+    function typeChar() {
+      if (i < line.length) {
+        textBox.innerHTML += line.charAt(i)
+        i++
+        setTimeout(typeChar, 60)
+      } else {
+        textBox.innerHTML += "<br>"
+        setTimeout(typeNextLine, 400)
+      }
+    }
+    typeChar()
   }
-  type()
+
+  typeNextLine()
 }
 
 /* === DATE QUESTION === */
@@ -410,11 +434,11 @@ function showDateQuestion() {
 
   const glassInner = document.querySelector(".glass-inner")
   glassInner.innerHTML = `
-    <h1 style="background:linear-gradient(135deg,#fff 40%,#00d2ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+    <h1 style="background:linear-gradient(135deg,#fff 40%,#00d2ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
       Dobi… DNS pe chalogi ek baar aur? 🍦
     </h1>
     <img src="couple.gif" class="hero fadeInUp">
-    <div class="buttons fadeInUp delay1" id="dateBtns">
+    <div class="buttons fadeInUp delay1">
       <button id="yesFinal" class="btn-yes">Haan 💙</button>
       <button id="noFinal"  class="btn-no">Nahi 🙈</button>
     </div>
@@ -437,8 +461,7 @@ function dateLogic() {
 
   yesFinal.onclick = () => {
     if (!triedNo) {
-      const freshMsg = document.getElementById("message")
-      typeReply2(freshMsg, "Pehle Nahi pe click karo… ek surprise hai 😄")
+      typeReply2(document.getElementById("message"), "Pehle Nahi pe click karo… ek surprise hai 😄")
       return
     }
     showFinalPage()
@@ -462,8 +485,7 @@ function dateLogic() {
       "Last chance… tumhari favourite flavour main order kar dunga 😌",
       "Okay okay… 😢"
     ]
-    const freshMsg = document.getElementById("message")
-    typeReply2(freshMsg, lines[Math.min(noClicks - 1, 3)])
+    typeReply2(document.getElementById("message"), lines[Math.min(noClicks - 1, 3)])
 
     if (noClicks === 4) {
       noFinal.style.position = "relative"
@@ -478,16 +500,11 @@ function dateLogic() {
           animation:cryBounce 0.5s ease infinite alternate;
         `
         noFinal.appendChild(cry)
-      }
-      if (!document.getElementById("cryStyle")) {
         const s = document.createElement("style")
-        s.id = "cryStyle"
-        s.textContent = `
-          @keyframes cryBounce {
-            from { transform:translateX(-50%) translateY(0); }
-            to   { transform:translateX(-50%) translateY(-7px); }
-          }
-        `
+        s.textContent = `@keyframes cryBounce {
+          from { transform:translateX(-50%) translateY(0); }
+          to   { transform:translateX(-50%) translateY(-7px); }
+        }`
         document.head.appendChild(s)
       }
     }
@@ -512,11 +529,9 @@ function dateLogic() {
     ny = Math.max(pad, Math.min(window.innerHeight - noFinal.offsetHeight - pad, ny))
     noFinal.style.position   = "fixed"
     noFinal.style.transition = "left 0.3s cubic-bezier(0.34,1.56,0.64,1), top 0.3s cubic-bezier(0.34,1.56,0.64,1)"
-    noFinal.style.left       = nx + "px"
-    noFinal.style.top        = ny + "px"
-    noFinal.style.zIndex     = "200"
-    noFinal.style.visibility = "visible"
-    noFinal.style.opacity    = "1"
+    noFinal.style.left = nx + "px"
+    noFinal.style.top  = ny + "px"
+    noFinal.style.zIndex = "200"
   }
 }
 
@@ -538,23 +553,6 @@ function showFinalPage() {
     </div>
     <div class="stars"></div>
   `
-
-  const s = document.createElement("style")
-  s.textContent = `
-    .date-timer {
-      margin-top:24px; padding:16px 24px;
-      background:rgba(255,255,255,0.07);
-      border:1px solid rgba(255,255,255,0.15);
-      border-radius:16px; backdrop-filter:blur(10px);
-    }
-    .timer-text {
-      font-family:'Playfair Display',serif;
-      font-size:16px; color:rgba(255,255,255,0.75);
-      line-height:1.8; font-style:italic;
-    }
-  `
-  document.head.appendChild(s)
-
   setTimeout(launchConfetti, 400)
   setTimeout(launchConfetti, 900)
   setTimeout(launchConfetti, 1400)
@@ -594,11 +592,7 @@ function typeReply2(el, text) {
   el.textContent = ""
   let i = 0
   function type() {
-    if (i < text.length) {
-      el.textContent += text.charAt(i)
-      i++
-      setTimeout(type, 55)
-    }
+    if (i < text.length) { el.textContent += text.charAt(i); i++; setTimeout(type, 55) }
   }
   type()
 }
