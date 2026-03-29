@@ -135,7 +135,7 @@ const questions = [
     optA:   "Acha tha, maza aaya 😊",
     optB:   "DNS best jagah hai tbh 🔥",
     replyA: "Haan na… mujhe bhi yaad hai woh din 💙",
-    replyB: "DNS ka shakkar aur tumhari company — dono hi sweet the 😏"
+    replyB: "DNS ka meetha aur tumhari company — dono hi sweet the 😏"
   },
   {
     text:   "Agar hum dono ice-cream khane jaayein toh Dobi ka order? 🍦",
@@ -152,7 +152,7 @@ const questions = [
     replyB: "Finally sach bol diya… main jaanta tha 😄💙"
   },
   {
-    text:   "Koi tumhare liye DNS pe desert order kar ke rakh de… 🍮",
+    text:   "Koi tumhare liye DNS pe ice-cream order kar ke rakh de… 🍦",
     optA:   "Aww that's so sweet 🥹",
     optB:   "Suspicious… kaun hai ye? 😂",
     replyA: "Chhoti cheezein badi hoti hain na… 💙",
@@ -259,7 +259,7 @@ function showResult() {
 }
 
 /* ============================================
-   MINI LOVE STORY — DNS se yahan tak 💙
+   MINI LOVE STORY
    ============================================ */
 function showMiniStory() {
   const glassInner = document.querySelector(".glass-inner")
@@ -272,23 +272,16 @@ function showMiniStory() {
 
   const style = document.createElement("style")
   style.textContent = `
-    #storyBox {
-      padding: 10px;
-      text-align: center;
-    }
+    #storyBox { padding:10px; text-align:center; }
     #storyText {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(16px, 3.5vw, 22px);
-      line-height: 2;
-      color: white;
-      text-shadow: 0 0 30px rgba(167,139,250,0.4);
+      font-family:'Playfair Display',serif;
+      font-size:clamp(16px,3.5vw,22px);
+      line-height:2; color:white;
+      text-shadow:0 0 30px rgba(167,139,250,0.4);
     }
     #storyCursor {
-      display: inline-block;
-      color: #a78bfa;
-      font-size: 22px;
-      animation: blink 0.9s step-end infinite;
-      margin-top: 8px;
+      display:inline-block; color:#a78bfa;
+      font-size:22px; animation:blink 0.9s step-end infinite; margin-top:8px;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
   `
@@ -296,22 +289,23 @@ function showMiniStory() {
 
   const storyLines = [
     "Sab kuch shuru hua ek Instagram DM se… 📩",
-    "Chhota sa HI bheja tha — par usne reply kiya.",
+    "Chhota sa hi bheja tha — par usne reply kiya.",
     "Aur phir baatein hoti rahi… roz… dheere dheere… 💬",
-    "Phir ek din Uska samne se MSg aya — DNS pe icecream khane k liye. 🍦",
-    "Socha pehli baar samne dekh ke kya bolunga",
-    "Waha usko dekha",
-    "Aur pehli nazar mein hi — kuch alag tha usmein.", 
-    "MUjhe yaad hai abhi bhi, mene bolne me fumble kiya, aur vo smj nhi payi😄",
+    "Phir ek din uska message aaya — DNS pe ice-cream khane chaloge? 🍦",
+    "Socha pehli baar samne dekh ke kya bolunga…",
+    "Wahan pahuncha. Usne dekha.",
+    "Aur pehli nazar mein hi — kuch alag tha usmein.",
+    "Mujhe yaad hai abhi bhi — bolne mein fumble kiya maine,",
+    "aur woh samajh nahi payi. 😄",
+    "Phir dono hanse — aur thodi si awkwardness pighal gayi.",
     "Menu dekh ke soch mein pad gayi —",
     "\"Yeh loon… nahi woh… hmm… konsa better hai?\"",
     "Yeh sawaal poore 10 minute chala. 😄",
     "Main dekh raha tha.",
     "Aur phir usne choose kiya — aur muskurayi.",
     "Woh chhoti si dimple wali smile… 💙",
-    "Main dekhta reh gaya.",
-    "Phir ek pal ke liye socha —",
-    "ese staring karna achha nahi hota.",
+    "Main dekhta reh gaya ek pal.",
+    "Phir socha — ese staring karna achha nahi hota.",
     "Toh maine nazar hata li.",
     "Par woh smile — woh andar kahin ruk gayi. 🌙",
     "Raat ko phir baatein… chat pe khamoshi bhi comfortable thi.",
@@ -336,12 +330,10 @@ function showMiniStory() {
     p.style.transform = "translateY(8px)"
     p.style.transition = "opacity 0.5s, transform 0.5s"
     storyTextEl.appendChild(p)
-
     requestAnimationFrame(() => {
       p.style.opacity = "1"
       p.style.transform = "translateY(0)"
     })
-
     function typeChar() {
       if (i < line.length) {
         p.textContent += line.charAt(i)
@@ -446,7 +438,7 @@ function dateLogic() {
   yesFinal.onclick = () => {
     if (!triedNo) {
       const freshMsg = document.getElementById("message")
-      typeReply2(freshMsg, "Pehle NO pe click karo… ek surprise hai 😄")
+      typeReply2(freshMsg, "Pehle Nahi pe click karo… ek surprise hai 😄")
       return
     }
     showFinalPage()
@@ -467,7 +459,7 @@ function dateLogic() {
     const lines = [
       "Sach mein? Ice-cream bhi hoga DNS pe 🍦",
       "Dobi… please? Main share bhi kar lunga 🥺",
-      "Last chance… aur main tumhari favourite flavour order kar dunga 😌",
+      "Last chance… tumhari favourite flavour main order kar dunga 😌",
       "Okay okay… 😢"
     ]
     const freshMsg = document.getElementById("message")
@@ -547,23 +539,18 @@ function showFinalPage() {
     <div class="stars"></div>
   `
 
-  // Timer styles
   const s = document.createElement("style")
   s.textContent = `
     .date-timer {
-      margin-top: 24px;
-      padding: 16px 24px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
+      margin-top:24px; padding:16px 24px;
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:16px; backdrop-filter:blur(10px);
     }
     .timer-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.8;
-      font-style: italic;
+      font-family:'Playfair Display',serif;
+      font-size:16px; color:rgba(255,255,255,0.75);
+      line-height:1.8; font-style:italic;
     }
   `
   document.head.appendChild(s)
