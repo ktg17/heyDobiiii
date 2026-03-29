@@ -9,41 +9,31 @@
 </head>
 <body>
 
-<!-- Particle canvas -->
 <canvas id="particleCanvas"></canvas>
-
-<!-- Floating hearts background -->
 <div class="bg-hearts"></div>
-
-<!-- Cursor trail -->
 <div id="cursorTrail"></div>
 
-<!-- Main container -->
 <div class="container" id="mainContainer">
   <div class="glass-inner">
     <h1 id="question" class="fadeInUp">Ready for a small fun quiz? 😄</h1>
     <img src="couple.gif" class="hero fadeInUp delay1">
     <div class="buttons fadeInUp delay2">
-      <button id="yesBtn" class="btn-yes">Yes 💙</button>
-      <button id="noBtn" class="btn-no">No 🙈</button>
+      <button id="optA" class="btn-yes">Option A</button>
+      <button id="optB" class="btn-no">Option B</button>
     </div>
     <p id="message"></p>
   </div>
 </div>
 
-<!-- Cinema mode -->
-<div id="cinema" class="hidden">
+<!-- Cinema mode — NO hidden class, controlled by opacity only -->
+<div id="cinema">
   <div class="cinema-bg"></div>
   <div id="emotionalText"></div>
-  <div class="cursor-blink" id="cursor">|</div>
+  <div id="cursor">|</div>
   <img src="bouquet.png" id="bouquet">
-  <audio id="voice"><source src="voice.mp3"></audio>
 </div>
 
-<!-- Music button -->
 <button id="musicToggle" title="Toggle Music">🎵</button>
-
-<!-- Music -->
 <audio id="music" loop><source src="music.mp3"></audio>
 
 <script src="script.js"></script>
