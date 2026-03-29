@@ -269,44 +269,52 @@ function showMiniStory() {
   `
 
   const storyLines = [
-    "Sab kuch shuru hua ek Instagram DM se… 📩",
-    "Chhota sa hi bheja tha — par usne reply kiya.",
-    "Aur phir baatein hoti rahi… roz… dheere dheere… 💬",
-    "Phir ek din uska message aaya — DNS pe ice-cream khane chaloge? 🍦",
-    "Socha pehli baar samne dekh ke kya bolunga…",
-    "Wahan pahuncha. Usne dekha.",
-    "Aur pehli nazar mein hi — kuch alag tha usmein.",
-    "Mujhe yaad hai abhi bhi — bolne mein fumble kiya maine,",
-    "aur woh samajh nahi payi. 😄",
-    "Phir dono hanse — aur thodi si awkwardness pighal gayi.",
-    "Menu dekh ke soch mein pad gayi —",
-    "\"Yeh loon… nahi woh… hmm… konsa better hai?\"",
-    "Yeh sawaal poore 10 minute chala. 😄",
-    "Main dekh raha tha.",
-    "Aur phir usne choose kiya — aur muskurayi.",
-    "Woh chhoti si dimple wali smile… 💙",
-    "Main dekhta reh gaya ek pal.",
-    "Phir socha — ese staring karna achha nahi hota.",
-    "Toh maine nazar hata li.",
-    "Par woh smile — woh andar kahin ruk gayi. 🌙",
-    "Raat ko phir baatein… chat pe khamoshi bhi comfortable thi.",
-    "Phir ek taraf se jawab aana band ho gaya…",
-    "…Dobi so gayi thi. Phir se. 😴",
-    "Par bura nahi laga.",
-    "Kyunki kuch log aisi neend laate hain — jahan safe feel ho. 💙",
-    "Yeh site…",
-    "Yeh woh saari baatein hain jo main kehte kehte ruk gaya.",
-    "Ya kabhi keh hi nahi paya. 🌙"
+    { text: "Sab kuch shuru hua ek Instagram DM se… 📩",           pause: 1800 },
+    { text: "Chhota sa hi bheja tha — par usne reply kiya.",        pause: 1800 },
+    { text: "Aur phir baatein hoti rahi… roz… dheere dheere… 💬",  pause: 2000 },
+    { text: "Phir ek din uska message aaya —",                      pause: 1200 },
+    { text: "DNS pe ice-cream khane chaloge? 🍦",                   pause: 2200 },
+    { text: "Socha… pehli baar samne dekh ke kya bolunga.",         pause: 2000 },
+    { text: "Wahan pahuncha.",                                       pause: 1400 },
+    { text: "Usne dekha. Aur main ruk gaya ek pal.",                pause: 2000 },
+    { text: "Pehla impression?",                                     pause: 1400 },
+    { text: "Yeh ladki — kuch alag hai.",                           pause: 2000 },
+    { text: "Aankhon mein ek warmth thi jo aksar nahi milti.",      pause: 2200 },
+    { text: "Aur ek chhoti si shyness — jo cute thi, honestly. 😊", pause: 2200 },
+    { text: "Mujhe yaad hai — bolne mein fumble kiya maine,",       pause: 1800 },
+    { text: "aur woh samajh nahi payi. 😄",                         pause: 1800 },
+    { text: "Phir dono hanse — aur awkwardness pighal gayi.",       pause: 2000 },
+    { text: "Menu dekh ke soch mein pad gayi —",                    pause: 1400 },
+    { text: '\"Yeh loon… nahi woh… hmm… konsa better hai?\"',    pause: 2000 },
+    { text: "Yeh sawaal poore 10 minute chala. 😄",                 pause: 2200 },
+    { text: "Main dekh raha tha.",                                   pause: 1600 },
+    { text: "Aur phir usne choose kiya — aur muskurayi.",           pause: 2000 },
+    { text: "Woh chhoti si dimple wali smile… 💙",                  pause: 2500 },
+    { text: "Main dekhta reh gaya ek pal.",                         pause: 1800 },
+    { text: "Phir socha — ese staring karna achha nahi hota.",      pause: 2000 },
+    { text: "Toh maine nazar hata li.",                             pause: 2000 },
+    { text: "Par woh smile — woh andar kahin ruk gayi. 🌙",        pause: 2500 },
+    { text: "Raat ko phir baatein… khamoshi bhi comfortable thi.",  pause: 2000 },
+    { text: "Phir ek taraf se jawab aana band ho gaya…",            pause: 1800 },
+    { text: "…Dobi so gayi thi. Phir se. 😴",                      pause: 2200 },
+    { text: "Par bura nahi laga.",                                   pause: 1600 },
+    { text: "Kyunki kuch log aisi neend laate hain —",              pause: 1400 },
+    { text: "jahan safe feel ho. 💙",                               pause: 2500 },
+    { text: "Yeh site…",                                            pause: 1800 },
+    { text: "Yeh woh saari baatein hain jo main kehte kehte ruk gaya.", pause: 2200 },
+    { text: "Ya kabhi keh hi nahi paya. 🌙",                       pause: 4000 }
   ]
 
   let lineIndex = 0
   const storyTextEl = document.getElementById("storyText")
   const storyCursor = document.getElementById("storyCursor")
 
-  function typeLine(line, cb) {
+  function typeLine(lineObj, cb) {
+    const line  = lineObj.text
+    const pause = lineObj.pause
     let i = 0
     const p = document.createElement("p")
-    p.style.cssText = "margin:4px 0; opacity:0; transform:translateY(8px); transition:opacity 0.5s, transform 0.5s;"
+    p.style.cssText = "margin:6px 0; opacity:0; transform:translateY(8px); transition:opacity 0.5s, transform 0.5s;"
     storyTextEl.appendChild(p)
     requestAnimationFrame(() => {
       p.style.opacity = "1"
@@ -316,11 +324,10 @@ function showMiniStory() {
       if (i < line.length) {
         p.textContent += line.charAt(i)
         i++
-        // Auto scroll
         storyTextEl.scrollTop = storyTextEl.scrollHeight
-        setTimeout(typeChar, 50)
+        setTimeout(typeChar, 72)   // 72ms per char — readable speed
       } else {
-        setTimeout(cb, 500)
+        setTimeout(cb, pause)      // custom pause after each line
       }
     }
     typeChar()
@@ -332,7 +339,7 @@ function showMiniStory() {
       lineIndex++
     } else {
       storyCursor.style.display = "none"
-      setTimeout(startCinema, 1800)
+      setTimeout(startCinema, 5000)  // 5 sec pause at end — reader can finish
     }
   }
   nextLine()
@@ -396,7 +403,7 @@ function startCinema() {
 
     if (line === "") {
       textBox.innerHTML += "<br>"
-      setTimeout(typeNextLine, 300)
+      setTimeout(typeNextLine, 700)
       return
     }
 
@@ -405,10 +412,10 @@ function startCinema() {
       if (i < line.length) {
         textBox.innerHTML += line.charAt(i)
         i++
-        setTimeout(typeChar, 60)
+        setTimeout(typeChar, 80)
       } else {
         textBox.innerHTML += "<br>"
-        setTimeout(typeNextLine, 400)
+        setTimeout(typeNextLine, 1200)
       }
     }
     typeChar()
