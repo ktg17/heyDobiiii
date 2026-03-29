@@ -299,7 +299,7 @@ function showMiniStory() {
     "Chhota sa HI bheja tha — par usne reply kiya.",
     "Aur phir baatein hoti rahi… roz… dheere dheere… 💬",
     "Phir ek din Uska samne se MSg aya — DNS pe icecream khane k liye. 🍦",
-    "Socha pehli baar samne dekh ke kya bolunga"
+    "Socha pehli baar samne dekh ke kya bolunga",
     "Waha usko dekha",
     "Aur pehli nazar mein hi — kuch alag tha usmein.", 
     "MUjhe yaad hai abhi bhi, mene bolne me fumble kiya, aur vo smj nhi payi😄",
