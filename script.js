@@ -1,8 +1,7 @@
 /* ============================================
-   ICE CREAM DATE — v3 FIXED
+   ICE CREAM DATE — Personalized for Dobi 💙
    ============================================ */
 
-/* === ELEMENTS === */
 const msg         = document.getElementById("message")
 const music       = document.getElementById("music")
 const bgMusic     = document.getElementById("music")
@@ -32,7 +31,7 @@ musicToggle.addEventListener("click", (e) => {
   }
 })
 
-/* === CUSTOM CURSOR TRAIL === */
+/* === CURSOR TRAIL === */
 document.addEventListener("mousemove", (e) => {
   cursorTrail.style.left = e.clientX + "px"
   cursorTrail.style.top  = e.clientY + "px"
@@ -72,7 +71,7 @@ function addRipple(btn) {
   })
 }
 
-/* === PARTICLE SYSTEM === */
+/* === PARTICLES === */
 const canvas = document.getElementById("particleCanvas")
 const ctx    = canvas.getContext("2d")
 canvas.width  = window.innerWidth
@@ -120,57 +119,58 @@ let heartInterval = setInterval(() => {
   setTimeout(() => heart.remove(), 13000)
 }, 1800)
 
-/* === QUIZ DATA === */
+/* ============================================
+   QUIZ — Personalized for Dobi
+   ============================================ */
 const questions = [
   {
-    text:   "If it's raining outside, what's your vibe? ☔",
-    optA:   "Hot chocolate & blanket 🍫",
-    optB:   "Dance in the rain 🌧️",
-    replyA: "Cozy soul detected. I'd join you with a cup too ☕",
-    replyB: "Rain-dancer energy — bold and beautiful 🌧️"
+    text:   "Ek rainy evening… Dobi ka mood kaisa hoga? ☔",
+    optA:   "Blanket + hot chocolate 🍫",
+    optB:   "Chhod yaar, so jaati hoon 😴",
+    replyA: "Cozy vibes… main bhi yehi sochta 😌",
+    replyB: "Haha sach mein? Chat pe bhi yehi hota hai na 😄"
   },
   {
-    text:   "Someone saves you the window seat… what do you feel? 🪟",
-    optA:   "That's so sweet 🥹",
-    optB:   "It's just a seat 😄",
-    replyA: "Small gestures hit different for you, don't they 💙",
-    replyB: "Fair enough… but someone noticed you anyway 😌"
+    text:   "Woh pehli baar DNS pe milna… 🍦",
+    optA:   "Acha tha, maza aaya 😊",
+    optB:   "DNS best jagah hai tbh 🔥",
+    replyA: "Haan na… mujhe bhi yaad hai woh din 💙",
+    replyB: "DNS ka shakkar aur tumhari company — dono hi sweet the 😏"
   },
   {
-    text:   "You get a text: 'I was thinking about you' — your reaction? 💬",
-    optA:   "Heart skips a beat 💓",
-    optB:   "Who is this?? 😭",
-    replyA: "That little smile you just made… I saw it 😏",
-    replyB: "Okay okay, cool and mysterious. Noted 😄"
+    text:   "Agar hum dono ice-cream khane jaayein toh Dobi ka order? 🍦",
+    optA:   "Classic chocolate, hamesha 🍫",
+    optB:   "Jo saamne dikhega le lungi 😄",
+    replyA: "Predictable… par cute bhi 😄",
+    replyB: "Main choose kar lunga toh? 😏"
   },
   {
-    text:   "Ideal evening, pick one ✨",
-    optA:   "Rooftop + city lights 🌃",
-    optB:   "Cozy café + soft music ☕",
-    replyA: "City lights, warm company, zero awkward silence 💫",
-    replyB: "Café corner person — honestly the best kind 🫶"
+    text:   "Chat pe baatein karte karte… 💬",
+    optA:   "Main jaag ke padh leti hoon 😇",
+    optB:   "Sach boluuun? So jaati hoon 😴",
+    replyA: "Pakka? 😄 Main maanunga nahi yeh 😏",
+    replyB: "Finally sach bol diya… main jaanta tha 😄💙"
   },
   {
-    text:   "Someone remembers your fav flavour without being told… 🍦",
-    optA:   "Okay that's adorable 🥺",
-    optB:   "Bit creepy ngl 😅",
-    replyA: "That's how people really listen — quietly 💙",
-    replyB: "Haha fair! But imagine if it felt right… 😌"
+    text:   "Koi tumhare liye DNS pe desert order kar ke rakh de… 🍮",
+    optA:   "Aww that's so sweet 🥹",
+    optB:   "Suspicious… kaun hai ye? 😂",
+    replyA: "Chhoti cheezein badi hoti hain na… 💙",
+    replyB: "Sochte raho… 😏"
   },
   {
-    text:   "Last one — some connections just feel different… do you believe that? 💙",
-    optA:   "Yes, 100% 🌙",
-    optB:   "Still waiting to feel it 💭",
-    replyA: "Yeah. Some people just feel like home 💙",
-    replyB: "Maybe you're closer to that feeling than you think… 😌"
+    text:   "Last question, Dobi — kuch connections alag hote hain… 💙",
+    optA:   "Haan, feel hota hai 🌙",
+    optB:   "Abhi soch rahi hoon 💭",
+    replyA: "Yehi toh main kehna chahta tha… 💙",
+    replyB: "Le waqt… main hoon yahan 😌"
   }
 ]
 
 let answers         = []
 let currentQuestion = 0
 let buttonsLocked   = false
-
-const questionText = document.getElementById("question")
+const questionText  = document.getElementById("question")
 
 /* === PROGRESS DOTS === */
 function createProgressDots() {
@@ -212,30 +212,23 @@ function showQuestion() {
     <button id="optA" class="btn-yes opt-btn">${q.optA}</button>
     <button id="optB" class="btn-no opt-btn">${q.optB}</button>
   `
-
   addRipple(document.getElementById("optA"))
   addRipple(document.getElementById("optB"))
-
   document.getElementById("optA").onclick = () => handleAnswer("a")
   document.getElementById("optB").onclick = () => handleAnswer("b")
-
   updateDots(currentQuestion)
 }
 
 function handleAnswer(choice) {
   if (buttonsLocked) return
   buttonsLocked = true
-
   answers.push(choice)
-
   const q   = questions[currentQuestion]
   const btn = document.getElementById(choice === "a" ? "optA" : "optB")
   btn.style.transform = "scale(0.9)"
   setTimeout(() => { btn.style.transform = "" }, 200)
-
   typeReply(choice === "a" ? q.replyA : q.replyB)
   questionText.classList.add("question-exit")
-
   setTimeout(() => {
     questionText.classList.remove("question-exit")
     msg.innerHTML = ""
@@ -257,15 +250,120 @@ function nextQuestion() {
 function showResult() {
   const dots = document.getElementById("progressDots")
   if (dots) dots.remove()
-
   questionText.classList.remove("question-enter","question-exit")
-  questionText.innerHTML = "Looks like we have a lot in common 💙"
+  questionText.innerHTML = "Dobi… I think we vibe 💙"
   questionText.classList.add("question-enter")
-
   document.querySelector(".buttons").style.display = "none"
   document.querySelector(".hero").style.display    = "none"
+  setTimeout(showMiniStory, 1600)
+}
 
-  setTimeout(startCinema, 1600)
+/* ============================================
+   MINI LOVE STORY — DNS se yahan tak 💙
+   ============================================ */
+function showMiniStory() {
+  const glassInner = document.querySelector(".glass-inner")
+  glassInner.innerHTML = `
+    <div id="storyBox">
+      <div id="storyText"></div>
+      <div id="storyCursor">|</div>
+    </div>
+  `
+
+  const style = document.createElement("style")
+  style.textContent = `
+    #storyBox {
+      padding: 10px;
+      text-align: center;
+    }
+    #storyText {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(16px, 3.5vw, 22px);
+      line-height: 2;
+      color: white;
+      text-shadow: 0 0 30px rgba(167,139,250,0.4);
+    }
+    #storyCursor {
+      display: inline-block;
+      color: #a78bfa;
+      font-size: 22px;
+      animation: blink 0.9s step-end infinite;
+      margin-top: 8px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  `
+  document.head.appendChild(style)
+
+  const storyLines = [
+    "Sab kuch shuru hua ek Instagram DM se… 📩",
+    "Chhota sa HI bheja tha — par usne reply kiya.",
+    "Aur phir baatein hoti rahi… roz… dheere dheere… 💬",
+    "Phir ek din Uska samne se MSg aya — DNS pe icecream khane k liye. 🍦",
+    "Socha pehli baar samne dekh ke kya bolunga"
+    "Waha usko dekha",
+    "Aur pehli nazar mein hi — kuch alag tha usmein.", 
+    "MUjhe yaad hai abhi bhi, mene bolne me fumble kiya, aur vo smj nhi payi😄",
+    "Menu dekh ke soch mein pad gayi —",
+    "\"Yeh loon… nahi woh… hmm… konsa better hai?\"",
+    "Yeh sawaal poore 10 minute chala. 😄",
+    "Main dekh raha tha.",
+    "Aur phir usne choose kiya — aur muskurayi.",
+    "Woh chhoti si dimple wali smile… 💙",
+    "Main dekhta reh gaya.",
+    "Phir ek pal ke liye socha —",
+    "ese staring karna achha nahi hota.",
+    "Toh maine nazar hata li.",
+    "Par woh smile — woh andar kahin ruk gayi. 🌙",
+    "Raat ko phir baatein… chat pe khamoshi bhi comfortable thi.",
+    "Phir ek taraf se jawab aana band ho gaya…",
+    "…Dobi so gayi thi. Phir se. 😴",
+    "Par bura nahi laga.",
+    "Kyunki kuch log aisi neend laate hain — jahan safe feel ho. 💙",
+    "Yeh site…",
+    "Yeh woh saari baatein hain jo main kehte kehte ruk gaya.",
+    "Ya kabhi keh hi nahi paya. 🌙"
+  ]
+
+  let lineIndex = 0
+  const storyTextEl = document.getElementById("storyText")
+  const storyCursor = document.getElementById("storyCursor")
+
+  function typeLine(line, cb) {
+    let i = 0
+    const p = document.createElement("p")
+    p.style.margin = "4px 0"
+    p.style.opacity = "0"
+    p.style.transform = "translateY(8px)"
+    p.style.transition = "opacity 0.5s, transform 0.5s"
+    storyTextEl.appendChild(p)
+
+    requestAnimationFrame(() => {
+      p.style.opacity = "1"
+      p.style.transform = "translateY(0)"
+    })
+
+    function typeChar() {
+      if (i < line.length) {
+        p.textContent += line.charAt(i)
+        i++
+        setTimeout(typeChar, 55)
+      } else {
+        setTimeout(cb, 600)
+      }
+    }
+    typeChar()
+  }
+
+  function nextLine() {
+    if (lineIndex < storyLines.length) {
+      typeLine(storyLines[lineIndex], nextLine)
+      lineIndex++
+    } else {
+      storyCursor.style.display = "none"
+      setTimeout(startCinema, 1800)
+    }
+  }
+  nextLine()
 }
 
 /* === CINEMA MODE === */
@@ -276,11 +374,10 @@ function startCinema() {
   const cursor  = document.getElementById("cursor")
 
   clearInterval(heartInterval)
-
   cinema.classList.remove("hidden")
   requestAnimationFrame(() => cinema.classList.add("show"))
 
-  const text = `Tumse ek baat kehni thi…\n\nWo baat jo main roz sochta hoon,\npar words kabhi sahi nahi aate…\n\nTum jab paas hoti ho —\nkuch ajeeb sa hota hai.\nDil kuch kehna chahta hai,\npar zubaan ruk jaati hai.\n\nYe jo khamoshi hai na mere paas…\nismein bohot kuch chhupta hai.\n\nMain introvert hoon —\nlekin tum woh hoti ho jiske liye\nmain dhoondne ki koshish karta hoon\nsahi words…\n\nIs baar dhundh liye. 💙`
+  const text = `Dobi…\n\nTumse ek baat kehni thi.\n\nWo baat jo main roz sochta hoon,\npar words kabhi sahi nahi aate…\n\nTum jab paas hoti ho —\nkuch ajeeb sa hota hai.\nDil kuch kehna chahta hai,\npar zubaan ruk jaati hai.\n\nYe jo khamoshi hai na mere paas…\nismein bohot kuch chhupta hai.\n\nMain introvert hoon —\nlekin tum woh hoti ho jiske liye\nmain dhoondne ki koshish karta hoon\nsahi words…\n\nIs baar dhundh liye. 💙`
 
   let i = 0
   function type() {
@@ -289,9 +386,7 @@ function startCinema() {
       i++
       setTimeout(type, 65)
     } else {
-      // Typing done — hide cursor
       setTimeout(() => { cursor.style.display = "none" }, 500)
-      // Wait, then show bouquet and move to date question
       setTimeout(() => {
         bouquet.classList.add("show")
         bgMusic.volume = 0.3
@@ -324,16 +419,15 @@ function showDateQuestion() {
   const glassInner = document.querySelector(".glass-inner")
   glassInner.innerHTML = `
     <h1 style="background:linear-gradient(135deg,#fff 40%,#00d2ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
-      Will you go on an ice-cream date with me? 🍦
+      Dobi… DNS pe chalogi ek baar aur? 🍦
     </h1>
     <img src="couple.gif" class="hero fadeInUp">
     <div class="buttons fadeInUp delay1" id="dateBtns">
-      <button id="yesFinal" class="btn-yes">Yes 💙</button>
-      <button id="noFinal"  class="btn-no">No 🙈</button>
+      <button id="yesFinal" class="btn-yes">Haan 💙</button>
+      <button id="noFinal"  class="btn-no">Nahi 🙈</button>
     </div>
     <p id="message"></p>
   `
-
   addRipple(document.getElementById("yesFinal"))
   addRipple(document.getElementById("noFinal"))
   dateLogic()
@@ -352,7 +446,7 @@ function dateLogic() {
   yesFinal.onclick = () => {
     if (!triedNo) {
       const freshMsg = document.getElementById("message")
-      typeReply2(freshMsg, "Wait 😄 try clicking NO first… there is a surprise.")
+      typeReply2(freshMsg, "Pehle NO pe click karo… ek surprise hai 😄")
       return
     }
     showFinalPage()
@@ -362,7 +456,6 @@ function dateLogic() {
     triedNo = true
     noClicks++
 
-    /* Shrink No, Grow Yes */
     noScale  = Math.max(0.40, noScale  - 0.18)
     yesScale = Math.min(1.60, yesScale + 0.15)
 
@@ -371,17 +464,15 @@ function dateLogic() {
     noFinal.style.transform   = `scale(${noScale})`
     yesFinal.style.transform  = `scale(${yesScale})`
 
-    /* Messages */
     const lines = [
-      "Are you sure? There will be ice-cream 🍦",
-      "Think again… best ice-cream date ever 😌",
-      "Last chance… I might share my ice-cream 🥺",
+      "Sach mein? Ice-cream bhi hoga DNS pe 🍦",
+      "Dobi… please? Main share bhi kar lunga 🥺",
+      "Last chance… aur main tumhari favourite flavour order kar dunga 😌",
       "Okay okay… 😢"
     ]
     const freshMsg = document.getElementById("message")
     typeReply2(freshMsg, lines[Math.min(noClicks - 1, 3)])
 
-    /* 4th click → crying emoji on No button */
     if (noClicks === 4) {
       noFinal.style.position = "relative"
       if (!document.getElementById("cryEmoji")) {
@@ -409,7 +500,6 @@ function dateLogic() {
       }
     }
 
-    /* 5th click onwards → No button orbits Yes */
     if (noClicks >= 5) {
       moveNoButton()
       noFinal.onmouseover  = moveNoButton
@@ -421,17 +511,13 @@ function dateLogic() {
     const yesRect = yesFinal.getBoundingClientRect()
     const cx = yesRect.left + yesRect.width  / 2
     const cy = yesRect.top  + yesRect.height / 2
-
     const angle  = Math.random() * 2 * Math.PI
     const radius = 120 + Math.random() * 100
-
     let nx = cx + Math.cos(angle) * radius - noFinal.offsetWidth  / 2
     let ny = cy + Math.sin(angle) * radius - noFinal.offsetHeight / 2
-
     const pad = 8
     nx = Math.max(pad, Math.min(window.innerWidth  - noFinal.offsetWidth  - pad, nx))
     ny = Math.max(pad, Math.min(window.innerHeight - noFinal.offsetHeight - pad, ny))
-
     noFinal.style.position   = "fixed"
     noFinal.style.transition = "left 0.3s cubic-bezier(0.34,1.56,0.64,1), top 0.3s cubic-bezier(0.34,1.56,0.64,1)"
     noFinal.style.left       = nx + "px"
@@ -448,15 +534,40 @@ function showFinalPage() {
   document.body.classList.add("night")
 
   document.querySelector(".glass-inner").innerHTML = `
-    <h1 class="dateText">So it's a date 💙</h1>
+    <h1 class="dateText">So it's a date, Dobi 💙</h1>
     <div class="loveMeter"><div class="loveFill"></div></div>
     <img src="icecream.png" width="180" class="ice fadeInUp">
     <img src="couple.gif" width="200" class="fadeInUp delay1">
     <p style="margin-top:16px;font-style:italic;color:rgba(255,255,255,0.8)">
-      Ice-cream 🍦, peaceful walk and your shy smile 😊
+      DNS pe milte hain… ice-cream tumhari favourite, baatein meri taraf se 🍦💙
     </p>
+    <div class="date-timer">
+      <p class="timer-text">Jab tu haan bolegi,<br>tab decide karenge kab milna hai 🍦</p>
+    </div>
     <div class="stars"></div>
   `
+
+  // Timer styles
+  const s = document.createElement("style")
+  s.textContent = `
+    .date-timer {
+      margin-top: 24px;
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+    .timer-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-style: italic;
+    }
+  `
+  document.head.appendChild(s)
+
   setTimeout(launchConfetti, 400)
   setTimeout(launchConfetti, 900)
   setTimeout(launchConfetti, 1400)
