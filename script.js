@@ -604,121 +604,145 @@ function heartbeatEffect() {
 /* === DEAR DOBI LETTER === */
 function showDearDobiLetter(container) {
   const letterLines = [
-    "heyyyyyy!! Dobiiiiii,",
+    "Dear Dobi,",
     "",
-    "lookkk — mane mari life ma regret nathi joituuuuuu.",
-    "Ke tyaaa ek 1% chance hato…",
-    "ane hu aa chance mate gayo j nyyyy.",
+    "Dekh — mane mari life ma koi regret nathi jooiyo.",
+    "Ke tyaan ek 1% chance hato…",
+    "ane hu aa chance mate gayo j nahi.",
     "Toh aa letter — e 1% chhe. 💙",
     "",
     "Newton e gravity tyaare discover kari,",
-    "jyaare ek divssss bas ek tree niche bethho hato.",
-    "Hu pan ek divss DNS ma bethho hato.",
+    "jyaare ek din bas ek ped niche bethho hato.",
+    "Hu pan ek din DNS ma bethho hato.",
     "Koi plan na hato.",
-    "Pan kuch discover jaroor thayuuu. 🍦",
-    "",
-    "Mane aa feelingssssss explain karta nathi avdtiiii.",
-    "Words bhaagi jaay chhe jyaare matter kare chhe.",
-    "etle aa letter lakhyoooo.",
+    "Pan kuch discover jaroor thayu. 🍦",
     "",
     "In 6-7 months —",
-    "tara sathe vaat karvi aa mara divss no",
-    "favorite part hoyyy chhe.",
-    "Taro reply avvooo, taru vaat karta karta suiiii javu 😴 —",
-    "badhuj genuinely cuteee lagey chhe.",
+    "tara sathe vaat karvi aa mara din no",
+    "favorite part bani gayu chhe.",
+    "Taro reply avvo, taru vaat karta karta soi javu 😴 —",
+    "badhuj genuinely saras lagey chhe.",
     "",
     "Ane honestly?",
-    "Mane tane chidavvu bvv gamey chheeee. 😄",
-    "Pelaaa reaction — irritation mixed with smile —",
+    "Mane tane chidavvu bau gamey chhe. 😄",
+    "Pele reaction — woh irritation mixed with smile —",
     "I genuinely look forward to that.",
     "",
     "Tari bak bak sambhalvi pan.",
     "Jyaare tu koi vaat par excited thay jaay chhe,",
-    "ane words tara thi faster thay jaayyy —",
-    "mane aa bvvv gameee chhe.",
-    "Don't ever stop that.",
-    "",
-    "Te jyareee HAIR HEART reel mokli ti",
-    "honestly, Me kyarey effort nthi nakhya e tu bhi jane chheee,",
-    "But te jyare kidhu k mokl e kri ne, kbrr ny bas me kri nakhyu eee",
-    "Don't ever stop that.",
-    "",
-    "sanjni adhuri vaat,",
-    "Savare ankh khule etle e blur vision ma tari notification gotti hoy chhe",
-    "Reply krvama late thay toh, lagee ke tne ignore fel ny thtu hoy neee",
-    "Tne reply krvama 2 vaar viachru,",
-    "K tu e vaat thi tu bore na thaaa", 
+    "ane words tara thi faster thay jaay —",
+    "mane aa bau gamey chhe.",
+    "Don't ever stop that. Seriously.",
     "",
     "Peli DNS wali sanj —",
     "10 minute nu menu confusion,",
     "peli dimple wali smile jyaare finally choose karyu,",
     "ane hu jo nazar hatavi lu chhu —",
-    "pan jo feel thay chhe e jaatiii j nathi.",
+    "pan jo feel thay chhe e jaati nathi.",
     "",
     "Log kahe chhe ke feelings time sathe",
     "ochi thay jaay chhe.",
-    "Mara sathe undhuu thayu.",
+    "Mara sathe ultu thayu.",
     "",
-    "So here it is Dobi —",
-    "jo hu feel karu chhu",
-    "e sirf friendship thi thodu alag chhe.",
-    "Shayad bvvv alag.",
+    "Toh hu direct aavu chhu —",
+    "kyaak aa feelings sirf dosti nathi.",
+    "Aa kuch alag chhe.",
+    "Aur bahot time thi chhe.",
     "",
     "Joh tara dil ma pan",
     "kyaarek 0.5% pan aavu aavyu hoy —",
-    "toh chll DNS par malieee farithiiii.",
+    "DNS par malivaa.",
     "Ice-cream mara taraf thi. 🍦",
     "",
-    "Ane joh nyyyy pan aavyu hoy —",
-    "toh pan DNS prr aav malvaa. 😄",
+    "Ane joh nahi pan aavyu hoy —",
+    "toh pan DNS par malivaa. 😄",
     "Because tari company —",
     "worth it chhe. Always.",
     "",
-    "— Sadelu chesecack😄,",
-    "If You remenber toh hu ej Sadelu chesecack😄 chhu",
-    "Je kyarey vaat ne puri na kreee, bus ky nyy kri ne chhordi dee",
-    "Etle j hu maari vaat puri kru chhu hvee",
+    "Mujhe tum pasand ho, Dobi.",
+    "There — maine keh diya. 💙",
     "",
-    "I Like Youhhh, Dobiiii.",
-    "There — mee ky didhuuu. 💙"
+    "— Pelo chokro,",
+    "je nazar hatavi le chhe,",
+    "tane chidave chhe,",
+    "tari bak bak sambhalvu chhe,",
+    "pan aa badhuj kehva ma ruki jaato hato.",
+    "",
+    "Hu atayre aa kru chhu. 💙"
   ]
 
+  // Replace entire page with letter — fullscreen scrollable
+  const letterPage = document.createElement("div")
+  letterPage.id = "letterPage"
+  letterPage.style.cssText = `
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0a1a, #0f2027, #1a0533);
+    z-index: 9000;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px 80px;
+    opacity: 0;
+    transition: opacity 1s ease;
+    scrollbar-width: none;
+  `
+  letterPage.style.cssText += "-ms-overflow-style: none;"
+  document.body.appendChild(letterPage)
+
+  // Hide scrollbar webkit
+  const scrollStyle = document.createElement("style")
+  scrollStyle.textContent = `#letterPage::-webkit-scrollbar { display: none; }`
+  document.head.appendChild(scrollStyle)
+
+  // Fade in
+  requestAnimationFrame(() => {
+    setTimeout(() => { letterPage.style.opacity = "1" }, 50)
+  })
+
+  // Title
+  const title = document.createElement("div")
+  title.style.cssText = `
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vw, 32px);
+    color: white;
+    margin-bottom: 32px;
+    text-align: center;
+    background: linear-gradient(135deg, #fff 40%, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: dateTextGlow 2s ease-in-out infinite alternate;
+  `
+  title.textContent = "Ek letter… 💙"
+  letterPage.appendChild(title)
+
+  // Letter box
   const letterBox = document.createElement("div")
   letterBox.id = "letterBox"
   letterBox.style.cssText = `
-    margin-top: 28px;
-    padding: 28px 24px;
+    max-width: 520px;
+    width: 100%;
+    padding: 32px 28px;
     background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,180,200,0.25);
-    border-radius: 20px;
+    border: 1px solid rgba(255,180,200,0.2);
+    border-radius: 24px;
     backdrop-filter: blur(10px);
     text-align: left;
     position: relative;
-    overflow: hidden;
   `
-
-  // Subtle pink shimmer on letter
-  const shimmer = document.createElement("div")
-  shimmer.style.cssText = `
-    position:absolute; top:-50%; left:-60%;
-    width:40%; height:200%;
-    background: linear-gradient(105deg, transparent, rgba(255,150,180,0.06), transparent);
-    animation: shimmer 5s linear infinite;
-    pointer-events:none;
-  `
-  letterBox.appendChild(shimmer)
+  letterPage.appendChild(letterBox)
 
   const letterText = document.createElement("div")
   letterText.id = "letterText"
   letterText.style.cssText = `
     font-family: 'Playfair Display', serif;
-    font-size: clamp(13px, 2.8vw, 16px);
-    line-height: 2;
-    color: rgba(255,255,255,0.88);
-    position: relative; z-index: 1;
+    font-size: clamp(14px, 3vw, 17px);
+    line-height: 2.1;
+    color: rgba(255,255,255,0.90);
   `
   letterBox.appendChild(letterText)
-  container.appendChild(letterBox)
 
   // Type letter lines one by one
   let idx = 0
@@ -728,29 +752,31 @@ function showDearDobiLetter(container) {
     idx++
 
     if (line === "") {
-      letterText.innerHTML += "<br>"
+      letterText.appendChild(document.createElement("br"))
       setTimeout(typeLetterLine, 500)
       return
     }
 
     const span = document.createElement("span")
-    span.style.cssText = "display:block; opacity:0; transform:translateY(6px); transition: opacity 0.6s, transform 0.6s;"
+    span.style.cssText = "display:block; opacity:0; transform:translateY(6px); transition:opacity 0.6s, transform 0.6s;"
     letterText.appendChild(span)
 
-    requestAnimationFrame(() => {
+    // Auto scroll to bottom as text appears
+    setTimeout(() => {
       span.style.opacity = "1"
       span.style.transform = "translateY(0)"
-    })
+      letterPage.scrollTop = letterPage.scrollHeight
+    }, 50)
 
     let i = 0
     function typeChar() {
       if (i < line.length) {
         span.textContent += line.charAt(i)
         i++
-        letterText.scrollTop = letterText.scrollHeight
-        setTimeout(typeChar, 55)
+        letterPage.scrollTop = letterPage.scrollHeight
+        setTimeout(typeChar, 52)
       } else {
-        setTimeout(typeLetterLine, 900)
+        setTimeout(typeLetterLine, 950)
       }
     }
     typeChar()
