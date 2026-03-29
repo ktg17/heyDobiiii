@@ -542,12 +542,233 @@ function dateLogic() {
   }
 }
 
+/* === PETAL FALL === */
+function startPetalFall() {
+  const petals = ["🌸","🌷","✿","❀","🌺"]
+  const petalInterval = setInterval(() => {
+    const p = document.createElement("span")
+    p.innerHTML = petals[Math.floor(Math.random()*petals.length)]
+    const size = Math.random()*18+10
+    const duration = Math.random()*6+5
+    const drift = (Math.random()-0.5)*200
+    p.style.cssText = `
+      position:fixed; top:-30px;
+      left:${Math.random()*100}vw;
+      font-size:${size}px;
+      pointer-events:none;
+      z-index:999;
+      opacity:0.85;
+      animation:petalDrift ${duration}s linear forwards;
+      --drift:${drift}px;
+    `
+    document.body.appendChild(p)
+    setTimeout(() => p.remove(), duration*1000)
+  }, 400)
+
+  // Add petal animation CSS
+  if (!document.getElementById("petalStyle")) {
+    const s = document.createElement("style")
+    s.id = "petalStyle"
+    s.textContent = `
+      @keyframes petalDrift {
+        0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity:0.9; }
+        50%  { transform: translateY(50vh) translateX(var(--drift)) rotate(180deg); opacity:0.7; }
+        100% { transform: translateY(110vh) translateX(calc(var(--drift)*1.5)) rotate(360deg); opacity:0; }
+      }
+    `
+    document.head.appendChild(s)
+  }
+
+  return petalInterval
+}
+
+/* === HEARTBEAT SCREEN === */
+function heartbeatEffect() {
+  const flash = document.createElement("div")
+  flash.style.cssText = `
+    position:fixed; inset:0; z-index:9990;
+    background: radial-gradient(circle at center, rgba(255,100,150,0.25), transparent 70%);
+    pointer-events:none; opacity:0;
+    transition: opacity 0.15s ease;
+  `
+  document.body.appendChild(flash)
+
+  // Two pulses like a real heartbeat — lub dub
+  setTimeout(() => { flash.style.opacity = "1" }, 0)
+  setTimeout(() => { flash.style.opacity = "0" }, 150)
+  setTimeout(() => { flash.style.opacity = "0.7" }, 300)
+  setTimeout(() => { flash.style.opacity = "0" }, 500)
+  setTimeout(() => flash.remove(), 700)
+}
+
+/* === DEAR DOBI LETTER === */
+function showDearDobiLetter(container) {
+  const letterLines = [
+    "heyyyyyy!! Dobiiiiii,",
+    "",
+    "lookkk — mane mari life ma regret nathi joituuuuuu.",
+    "Ke tyaaa ek 1% chance hato…",
+    "ane hu aa chance mate gayo j nyyyy.",
+    "Toh aa letter — e 1% chhe. 💙",
+    "",
+    "Newton e gravity tyaare discover kari,",
+    "jyaare ek divssss bas ek tree niche bethho hato.",
+    "Hu pan ek divss DNS ma bethho hato.",
+    "Koi plan na hato.",
+    "Pan kuch discover jaroor thayuuu. 🍦",
+    "",
+    "Mane aa feelingssssss explain karta nathi avdtiiii.",
+    "Words bhaagi jaay chhe jyaare matter kare chhe.",
+    "etle aa letter lakhyoooo.",
+    "",
+    "In 6-7 months —",
+    "tara sathe vaat karvi aa mara divss no",
+    "favorite part hoyyy chhe.",
+    "Taro reply avvooo, taru vaat karta karta suiiii javu 😴 —",
+    "badhuj genuinely cuteee lagey chhe.",
+    "",
+    "Ane honestly?",
+    "Mane tane chidavvu bvv gamey chheeee. 😄",
+    "Pelaaa reaction — irritation mixed with smile —",
+    "I genuinely look forward to that.",
+    "",
+    "Tari bak bak sambhalvi pan.",
+    "Jyaare tu koi vaat par excited thay jaay chhe,",
+    "ane words tara thi faster thay jaayyy —",
+    "mane aa bvvv gameee chhe.",
+    "Don't ever stop that.",
+    "",
+    "Te jyareee HAIR HEART reel mokli ti",
+    "honestly, Me kyarey effort nthi nakhya e tu bhi jane chheee,",
+    "But te jyare kidhu k mokl e kri ne, kbrr ny bas me kri nakhyu eee",
+    "Don't ever stop that.",
+    "",
+    "sanjni adhuri vaat,",
+    "Savare ankh khule etle e blur vision ma tari notification gotti hoy chhe",
+    "Reply krvama late thay toh, lagee ke tne ignore fel ny thtu hoy neee",
+    "Tne reply krvama 2 vaar viachru,",
+    "K tu e vaat thi tu bore na thaaa", 
+    "",
+    "Peli DNS wali sanj —",
+    "10 minute nu menu confusion,",
+    "peli dimple wali smile jyaare finally choose karyu,",
+    "ane hu jo nazar hatavi lu chhu —",
+    "pan jo feel thay chhe e jaatiii j nathi.",
+    "",
+    "Log kahe chhe ke feelings time sathe",
+    "ochi thay jaay chhe.",
+    "Mara sathe undhuu thayu.",
+    "",
+    "So here it is Dobi —",
+    "jo hu feel karu chhu",
+    "e sirf friendship thi thodu alag chhe.",
+    "Shayad bvvv alag.",
+    "",
+    "Joh tara dil ma pan",
+    "kyaarek 0.5% pan aavu aavyu hoy —",
+    "toh chll DNS par malieee farithiiii.",
+    "Ice-cream mara taraf thi. 🍦",
+    "",
+    "Ane joh nyyyy pan aavyu hoy —",
+    "toh pan DNS prr aav malvaa. 😄",
+    "Because tari company —",
+    "worth it chhe. Always.",
+    "",
+    "— Sadelu chesecack😄,",
+    "If You remenber toh hu ej Sadelu chesecack😄 chhu",
+    "Je kyarey vaat ne puri na kreee, bus ky nyy kri ne chhordi dee",
+    "Etle j hu maari vaat puri kru chhu hvee",
+    "",
+    "I Like Youhhh, Dobiiii.",
+    "There — mee ky didhuuu. 💙"
+  ]
+
+  const letterBox = document.createElement("div")
+  letterBox.id = "letterBox"
+  letterBox.style.cssText = `
+    margin-top: 28px;
+    padding: 28px 24px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,180,200,0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  `
+
+  // Subtle pink shimmer on letter
+  const shimmer = document.createElement("div")
+  shimmer.style.cssText = `
+    position:absolute; top:-50%; left:-60%;
+    width:40%; height:200%;
+    background: linear-gradient(105deg, transparent, rgba(255,150,180,0.06), transparent);
+    animation: shimmer 5s linear infinite;
+    pointer-events:none;
+  `
+  letterBox.appendChild(shimmer)
+
+  const letterText = document.createElement("div")
+  letterText.id = "letterText"
+  letterText.style.cssText = `
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(13px, 2.8vw, 16px);
+    line-height: 2;
+    color: rgba(255,255,255,0.88);
+    position: relative; z-index: 1;
+  `
+  letterBox.appendChild(letterText)
+  container.appendChild(letterBox)
+
+  // Type letter lines one by one
+  let idx = 0
+  function typeLetterLine() {
+    if (idx >= letterLines.length) return
+    const line = letterLines[idx]
+    idx++
+
+    if (line === "") {
+      letterText.innerHTML += "<br>"
+      setTimeout(typeLetterLine, 500)
+      return
+    }
+
+    const span = document.createElement("span")
+    span.style.cssText = "display:block; opacity:0; transform:translateY(6px); transition: opacity 0.6s, transform 0.6s;"
+    letterText.appendChild(span)
+
+    requestAnimationFrame(() => {
+      span.style.opacity = "1"
+      span.style.transform = "translateY(0)"
+    })
+
+    let i = 0
+    function typeChar() {
+      if (i < line.length) {
+        span.textContent += line.charAt(i)
+        i++
+        letterText.scrollTop = letterText.scrollHeight
+        setTimeout(typeChar, 55)
+      } else {
+        setTimeout(typeLetterLine, 900)
+      }
+    }
+    typeChar()
+  }
+
+  setTimeout(typeLetterLine, 800)
+}
+
 /* === FINAL PAGE === */
 function showFinalPage() {
   clearInterval(heartInterval)
   document.body.classList.add("night")
 
-  document.querySelector(".glass-inner").innerHTML = `
+  // Heartbeat on Yes click
+  heartbeatEffect()
+
+  const glassInner = document.querySelector(".glass-inner")
+  glassInner.innerHTML = `
     <h1 class="dateText">So it's a date, Dobi 💙</h1>
     <div class="loveMeter"><div class="loveFill"></div></div>
     <img src="icecream.png" width="180" class="ice fadeInUp">
@@ -560,9 +781,19 @@ function showFinalPage() {
     </div>
     <div class="stars"></div>
   `
+
+  // Start petal fall
+  startPetalFall()
+
+  // Confetti
   setTimeout(launchConfetti, 400)
   setTimeout(launchConfetti, 900)
   setTimeout(launchConfetti, 1400)
+
+  // Dear Dobi letter appears after confetti settles
+  setTimeout(() => {
+    showDearDobiLetter(glassInner)
+  }, 2500)
 }
 
 /* === CONFETTI === */
