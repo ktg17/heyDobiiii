@@ -1,7 +1,8 @@
 /* ============================================
-   AIRDRAW — Browser-based Air Drawing
-   MediaPipe Hands JS + Canvas Drawing
-   Heart shape detect karo toh special animation!
+   AIRDRAW — Smooth Air Drawing
+   - Smooth bezier curves (no dots!)
+   - Better index finger detection
+   - Heart detection + special animation
    ============================================ */
 
 function initAirDraw() {
@@ -18,10 +19,11 @@ function initAirDraw() {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 24px 16px;
+    padding: 24px 16px 40px;
     opacity: 0;
     transition: opacity 0.8s ease;
-    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
   `
   document.body.appendChild(airPage)
   setTimeout(() => { airPage.style.opacity = "1" }, 50)
@@ -30,17 +32,28 @@ function initAirDraw() {
   const title = document.createElement("div")
   title.style.cssText = `
     font-family: 'Playfair Display', serif;
-    font-size: clamp(18px, 4vw, 26px);
+    font-size: clamp(17px, 3.5vw, 24px);
     color: white;
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     background: linear-gradient(135deg, #fff 40%, #a78bfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   `
-  title.innerHTML = "Hawa mein draw karo, Dobi ✨<br><small style='font-size:13px;opacity:0.6;-webkit-text-fill-color:rgba(255,255,255,0.6);'>Index finger uthao — draw shuru! ❤️ draw karo kuch special hoga 😄</small>"
+  title.innerHTML = "Hawa mein draw karo, Dobi ✨"
   airPage.appendChild(title)
+
+  const subtitle = document.createElement("div")
+  subtitle.style.cssText = `
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    margin-bottom: 12px;
+  `
+  subtitle.textContent = "☝️ Sirf index finger uthao → draw shuru | Baaki fingers band karo → ruko | 💙 Heart banao → surprise!"
+  airPage.appendChild(subtitle)
 
   /* === STATUS === */
   const status = document.createElement("div")
@@ -48,9 +61,10 @@ function initAirDraw() {
   status.style.cssText = `
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 8px;
+    color: rgba(167,139,250,0.8);
+    margin-bottom: 10px;
     text-align: center;
+    min-height: 20px;
   `
   status.textContent = "Camera load ho rahi hai… 🎥"
   airPage.appendChild(status)
@@ -59,18 +73,18 @@ function initAirDraw() {
   const wrapper = document.createElement("div")
   wrapper.style.cssText = `
     position: relative;
-    width: min(480px, 95vw);
+    width: min(520px, 96vw);
     aspect-ratio: 4/3;
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 0 40px rgba(167,139,250,0.2);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 0 50px rgba(167,139,250,0.15);
+    background: #000;
   `
   airPage.appendChild(wrapper)
 
-  /* VIDEO */
+  /* VIDEO — mirrored */
   const video = document.createElement("video")
-  video.id = "airVideo"
   video.autoplay = true
   video.playsInline = true
   video.muted = true
@@ -80,13 +94,12 @@ function initAirDraw() {
     width: 100%; height: 100%;
     object-fit: cover;
     transform: scaleX(-1);
-    opacity: 0.3;
+    opacity: 0.35;
   `
   wrapper.appendChild(video)
 
   /* DRAWING CANVAS */
   const drawCanvas = document.createElement("canvas")
-  drawCanvas.id = "airCanvas"
   drawCanvas.style.cssText = `
     position: absolute;
     inset: 0;
@@ -94,33 +107,66 @@ function initAirDraw() {
   `
   wrapper.appendChild(drawCanvas)
 
+  /* CURSOR DOT CANVAS — separate so drawing doesn't get erased */
+  const cursorCanvas = document.createElement("canvas")
+  cursorCanvas.style.cssText = `
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  `
+  wrapper.appendChild(cursorCanvas)
+
   /* === BUTTONS === */
   const btnRow = document.createElement("div")
-  btnRow.style.cssText = "display:flex; gap:12px; margin-top:16px; flex-wrap:wrap; justify-content:center;"
+  btnRow.style.cssText = "display:flex; gap:12px; margin-top:16px; flex-wrap:wrap; justify-content:center; align-items:center;"
   airPage.appendChild(btnRow)
 
-  const colors = ["#00d2ff","#a78bfa","#ff6eb4","#ffd700","#fff"]
+  const colorOptions = [
+    { color: "#ff6eb4", label: "Pink" },
+    { color: "#00d2ff", label: "Blue" },
+    { color: "#a78bfa", label: "Purple" },
+    { color: "#ffd700", label: "Gold" },
+    { color: "#ffffff", label: "White" }
+  ]
   let currentColor = "#ff6eb4"
 
-  colors.forEach(c => {
+  colorOptions.forEach(({ color }) => {
     const dot = document.createElement("div")
     dot.style.cssText = `
-      width: 28px; height: 28px;
+      width: 30px; height: 30px;
       border-radius: 50%;
-      background: ${c};
+      background: ${color};
       cursor: pointer;
-      border: 2px solid ${c === currentColor ? "white" : "transparent"};
+      border: 3px solid ${color === currentColor ? "white" : "transparent"};
       transition: transform 0.2s, border 0.2s;
-      box-shadow: 0 0 10px ${c}88;
+      box-shadow: 0 0 12px ${color}88;
     `
     dot.onclick = () => {
-      currentColor = c
-      document.querySelectorAll("#airDrawPage .color-dot").forEach(d => d.style.border = "2px solid transparent")
-      dot.style.border = "2px solid white"
+      currentColor = color
+      document.querySelectorAll(".airdraw-color-dot").forEach(d => {
+        d.style.border = "3px solid transparent"
+        d.style.transform = ""
+      })
+      dot.style.border = "3px solid white"
+      dot.style.transform = "scale(1.2)"
     }
-    dot.classList.add("color-dot")
+    dot.classList.add("airdraw-color-dot")
     btnRow.appendChild(dot)
   })
+
+  /* Brush size */
+  const sizeSlider = document.createElement("input")
+  sizeSlider.type = "range"
+  sizeSlider.min = "2"
+  sizeSlider.max = "12"
+  sizeSlider.value = "5"
+  sizeSlider.style.cssText = `
+    width: 80px;
+    accent-color: #a78bfa;
+    cursor: pointer;
+  `
+  btnRow.appendChild(sizeSlider)
 
   const clearBtn = document.createElement("button")
   clearBtn.textContent = "🗑️ Clear"
@@ -137,7 +183,9 @@ function initAirDraw() {
   clearBtn.onclick = () => {
     const ctx = drawCanvas.getContext("2d")
     ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height)
+    drawPoints = []
     heartDetected = false
+    pathHistory = []
   }
   btnRow.appendChild(clearBtn)
 
@@ -154,30 +202,40 @@ function initAirDraw() {
     cursor: pointer;
   `
   closeBtn.onclick = () => {
-    stopCamera()
+    stopAll()
     airPage.style.opacity = "0"
     setTimeout(() => airPage.remove(), 800)
   }
   btnRow.appendChild(closeBtn)
 
-  /* === LOAD MEDIAPIPE === */
-  let hands = null
-  let cameraStream = null
-  let lastX = null, lastY = null
-  let heartDetected = false
-  let drawPoints = []
+  /* === STATE === */
+  let cameraStream   = null
+  let handsModel     = null
+  let animFrame      = null
+  let heartDetected  = false
+  let drawPoints     = []
+  let pathHistory    = []  // for heart detection
+
+  /* Smooth drawing state */
+  let smoothX = null
+  let smoothY = null
+  let prevX   = null
+  let prevY   = null
   let isDrawing = false
 
-  function stopCamera() {
-    if (cameraStream) {
-      cameraStream.getTracks().forEach(t => t.stop())
-    }
+  /* Smoothing factor — 0 = no smooth, 1 = max smooth */
+  const SMOOTH = 0.55
+
+  function stopAll() {
+    if (cameraStream) cameraStream.getTracks().forEach(t => t.stop())
+    if (animFrame)    cancelAnimationFrame(animFrame)
+    if (handsModel)   handsModel.close && handsModel.close()
   }
 
-  /* Dynamically load MediaPipe scripts */
+  /* === LOAD MEDIAPIPE === */
   function loadScript(src) {
     return new Promise((resolve, reject) => {
-      if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+      if (document.querySelector(`script[src="${src}"]`)) { resolve(); return }
       const s = document.createElement("script")
       s.src = src
       s.crossOrigin = "anonymous"
@@ -187,151 +245,170 @@ function initAirDraw() {
     })
   }
 
-  async function setupMediaPipe() {
+  async function setup() {
     try {
-      status.textContent = "MediaPipe load ho rahi hai… ⏳"
+      status.textContent = "Hand model load ho raha hai… ⏳"
 
       await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js")
       await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js")
       await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js")
 
-      status.textContent = "Hand model load ho raha hai… 🤖"
-
-      hands = new Hands({
-        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+      handsModel = new Hands({
+        locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`
       })
 
-      hands.setOptions({
-        maxNumHands: 1,
-        modelComplexity: 1,
-        minDetectionConfidence: 0.7,
-        minTrackingConfidence: 0.6
+      handsModel.setOptions({
+        maxNumHands:            1,
+        modelComplexity:        1,
+        minDetectionConfidence: 0.75,
+        minTrackingConfidence:  0.7
       })
 
-      hands.onResults(onHandResults)
+      handsModel.onResults(onResults)
 
-      /* Start camera */
+      /* Camera */
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 480, height: 360, facingMode: "user" }
+        video: { width: 640, height: 480, facingMode: "user" }
       })
       cameraStream = stream
       video.srcObject = stream
 
-      video.onloadedmetadata = () => {
-        drawCanvas.width  = video.videoWidth  || 480
-        drawCanvas.height = video.videoHeight || 360
-        video.play()
-        status.textContent = "Index finger uthao aur draw karo! ✍️"
-        processLoop()
-      }
+      await new Promise(res => { video.onloadedmetadata = res })
+      video.play()
+
+      drawCanvas.width    = video.videoWidth  || 640
+      drawCanvas.height   = video.videoHeight || 480
+      cursorCanvas.width  = drawCanvas.width
+      cursorCanvas.height = drawCanvas.height
+
+      status.textContent = "☝️ Index finger uthao aur draw karo!"
+      loop()
 
     } catch (err) {
       console.error(err)
-      status.textContent = "Camera access nahi mila 😕 — browser settings check karo"
+      if (err.name === "NotAllowedError") {
+        status.textContent = "Camera permission deny kiya — browser settings mein allow karo 🙏"
+      } else {
+        status.textContent = "Kuch error aaya 😕 — page refresh karo"
+      }
     }
   }
 
-  /* === PROCESS LOOP === */
-  async function processLoop() {
-    if (!hands || !video || video.readyState < 2) {
-      requestAnimationFrame(processLoop)
-      return
+  /* === MAIN LOOP === */
+  async function loop() {
+    if (video.readyState >= 2 && handsModel) {
+      await handsModel.send({ image: video })
     }
-    await hands.send({ image: video })
-    requestAnimationFrame(processLoop)
+    animFrame = requestAnimationFrame(loop)
   }
 
   /* === HAND RESULTS === */
-  function onHandResults(results) {
+  function onResults(results) {
+    const drawCtx   = drawCanvas.getContext("2d")
+    const cursorCtx = cursorCanvas.getContext("2d")
+
+    /* Clear cursor canvas every frame */
+    cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height)
+
     if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
-      lastX = null; lastY = null
+      smoothX = null; smoothY = null
+      prevX   = null; prevY   = null
       isDrawing = false
       return
     }
 
-    const landmarks = results.multiHandLandmarks[0]
-    const ctx = drawCanvas.getContext("2d")
+    const lm = results.multiHandLandmarks[0]
 
-    /* Index finger tip = landmark 8 */
-    const tip = landmarks[8]
+    /* Mirror X (video is mirrored) */
+    const rawX = (1 - lm[8].x) * drawCanvas.width
+    const rawY =      lm[8].y  * drawCanvas.height
 
-    /* Mirror X since video is mirrored */
-    const x = (1 - tip.x) * drawCanvas.width
-    const y = tip.y * drawCanvas.height
+    /* === SMOOTH position with lerp === */
+    if (smoothX === null) { smoothX = rawX; smoothY = rawY }
+    smoothX = smoothX + (rawX - smoothX) * (1 - SMOOTH)
+    smoothY = smoothY + (rawY - smoothY) * (1 - SMOOTH)
 
-    /* Check if index finger is UP (drawing mode) */
-    /* Index tip (8) should be above index PIP (6) */
-    const indexUp = landmarks[8].y < landmarks[6].y
+    const x = smoothX
+    const y = smoothY
 
-    /* Check if other fingers are down (fist = erase/stop) */
-    const middleDown = landmarks[12].y > landmarks[10].y
-    const ringDown   = landmarks[16].y > landmarks[14].y
+    /* === FINGER STATE DETECTION ===
+       Index UP  = tip(8).y < pip(6).y  AND  tip(8).y < mcp(5).y
+       Others DOWN = middle(12).y > middle_pip(10).y
+                     ring(16).y   > ring_pip(14).y
+                     pinky(20).y  > pinky_pip(18).y
+    */
+    const indexUp  = lm[8].y < lm[6].y && lm[8].y < lm[5].y
+    const middleDown = lm[12].y > lm[10].y
+    const ringDown   = lm[16].y > lm[14].y
+    const pinkyDown  = lm[20].y > lm[18].y
 
-    /* Drawing only when index is up and others are curled */
-    isDrawing = indexUp && middleDown && ringDown
+    /* Drawing = index up, others down */
+    const shouldDraw = indexUp && middleDown && ringDown && pinkyDown
 
-    if (isDrawing) {
-      if (lastX !== null && lastY !== null) {
-        ctx.beginPath()
-        ctx.moveTo(lastX, lastY)
-        ctx.lineTo(x, y)
-        ctx.strokeStyle = currentColor
-        ctx.lineWidth = 4
-        ctx.lineCap = "round"
-        ctx.lineJoin = "round"
-        ctx.shadowColor = currentColor
-        ctx.shadowBlur = 8
-        ctx.stroke()
+    /* === CURSOR DOT (always show) === */
+    const dotColor = shouldDraw ? currentColor : "rgba(255,255,255,0.5)"
+    cursorCtx.beginPath()
+    cursorCtx.arc(x, y, shouldDraw ? 8 : 5, 0, Math.PI * 2)
+    cursorCtx.fillStyle = dotColor
+    cursorCtx.shadowColor = dotColor
+    cursorCtx.shadowBlur  = shouldDraw ? 16 : 6
+    cursorCtx.fill()
 
-        /* Store points for heart detection */
-        drawPoints.push({ x, y })
-        if (drawPoints.length > 150) drawPoints.shift()
+    /* === DRAWING === */
+    if (shouldDraw) {
+      isDrawing = true
 
-        /* Check for heart shape */
-        if (!heartDetected && drawPoints.length > 60) {
-          checkHeart(drawPoints)
+      if (prevX !== null && prevY !== null) {
+        const brushSize = parseInt(sizeSlider.value)
+
+        drawCtx.beginPath()
+        drawCtx.moveTo(prevX, prevY)
+
+        /* Smooth bezier curve through midpoint */
+        const midX = (prevX + x) / 2
+        const midY = (prevY + y) / 2
+        drawCtx.quadraticCurveTo(prevX, prevY, midX, midY)
+
+        drawCtx.strokeStyle = currentColor
+        drawCtx.lineWidth   = brushSize
+        drawCtx.lineCap     = "round"
+        drawCtx.lineJoin    = "round"
+        drawCtx.shadowColor = currentColor
+        drawCtx.shadowBlur  = brushSize * 2
+        drawCtx.stroke()
+
+        /* Store for heart detection */
+        pathHistory.push({ x, y })
+        if (pathHistory.length > 200) pathHistory.shift()
+
+        if (!heartDetected && pathHistory.length > 80) {
+          checkHeart(pathHistory)
         }
       }
 
-      /* Fingertip glow dot */
-      ctx.beginPath()
-      ctx.arc(x, y, 6, 0, Math.PI * 2)
-      ctx.fillStyle = currentColor
-      ctx.shadowColor = currentColor
-      ctx.shadowBlur = 15
-      ctx.fill()
+      prevX = x
+      prevY = y
 
-      lastX = x
-      lastY = y
     } else {
-      /* Show cursor dot even when not drawing */
-      const prev = ctx.getImageData(0, 0, drawCanvas.width, drawCanvas.height)
-
-      /* Small indicator dot */
-      ctx.beginPath()
-      ctx.arc(x, y, 5, 0, Math.PI * 2)
-      ctx.fillStyle = "rgba(255,255,255,0.4)"
-      ctx.shadowBlur = 0
-      ctx.fill()
-
-      lastX = null
-      lastY = null
-
-      /* Restore after showing dot */
-      setTimeout(() => {
-        if (drawCanvas) ctx.putImageData(prev, 0, 0)
-      }, 50)
+      /* Pen lifted — reset prev points */
+      if (isDrawing && prevX !== null) {
+        /* Segment break — reset path history for new stroke */
+        pathHistory = []
+      }
+      isDrawing = false
+      prevX = null
+      prevY = null
     }
   }
 
   /* === HEART DETECTION ===
-     Simple heuristic: check if drawn path forms a rough heart shape
-     - Has a top-wide, bottom-narrow profile
-     - Y range is significant
-     - X range covers decent width
+     Check if drawn stroke resembles a heart:
+     - Wide top, narrow bottom
+     - Closed-ish loop
+     - Decent size
   */
   function checkHeart(pts) {
-    if (pts.length < 60) return
+    if (pts.length < 80) return
 
     const xs = pts.map(p => p.x)
     const ys = pts.map(p => p.y)
@@ -341,116 +418,121 @@ function initAirDraw() {
     const width  = maxX - minX
     const height = maxY - minY
 
-    if (width < 60 || height < 50) return
+    /* Minimum size check */
+    if (width < 80 || height < 60) return
 
-    /* Top half should be wider than bottom */
     const midY = (minY + maxY) / 2
+
     const topPts = pts.filter(p => p.y < midY)
     const botPts = pts.filter(p => p.y >= midY)
+    if (topPts.length < 20 || botPts.length < 20) return
 
-    if (topPts.length < 10 || botPts.length < 10) return
+    const topW = Math.max(...topPts.map(p=>p.x)) - Math.min(...topPts.map(p=>p.x))
+    const botW = Math.max(...botPts.map(p=>p.x)) - Math.min(...botPts.map(p=>p.x))
 
-    const topWidth = Math.max(...topPts.map(p=>p.x)) - Math.min(...topPts.map(p=>p.x))
-    const botWidth = Math.max(...botPts.map(p=>p.x)) - Math.min(...botPts.map(p=>p.x))
+    /* Top should be wider than bottom */
+    if (topW < botW * 0.7) return
 
-    /* Check if path comes back (closed-ish loop) */
+    /* Check loop closure */
     const first = pts[0]
     const last  = pts[pts.length - 1]
     const dist  = Math.hypot(first.x - last.x, first.y - last.y)
-    const isLoop = dist < width * 0.6
+    if (dist > width * 0.7) return
 
-    if (topWidth > botWidth * 0.8 && isLoop) {
-      heartDetected = true
-      triggerHeartMagic()
-    }
+    heartDetected = true
+    triggerHeartMagic()
   }
 
-  /* === HEART MAGIC ANIMATION === */
+  /* === HEART MAGIC === */
   function triggerHeartMagic() {
-    status.textContent = "💙 Heart detect hua!! Special moment! 💙"
+    status.textContent = "💙 Heart detect hua!! 💙"
 
     /* Screen flash */
     const flash = document.createElement("div")
     flash.style.cssText = `
-      position: fixed; inset: 0; z-index: 99999;
-      background: radial-gradient(circle at center, rgba(255,100,180,0.4), transparent 70%);
-      pointer-events: none; opacity: 0;
-      transition: opacity 0.3s ease;
+      position:fixed; inset:0; z-index:99999;
+      background: radial-gradient(circle at center, rgba(255,100,180,0.45), transparent 70%);
+      pointer-events:none; opacity:0;
+      transition: opacity 0.25s ease;
     `
     document.body.appendChild(flash)
     setTimeout(() => { flash.style.opacity = "1" }, 0)
-    setTimeout(() => { flash.style.opacity = "0" }, 400)
+    setTimeout(() => { flash.style.opacity = "0.6" }, 250)
+    setTimeout(() => { flash.style.opacity = "0" }, 500)
     setTimeout(() => flash.remove(), 800)
 
-    /* Big heart explosion from center of canvas */
-    const rect = drawCanvas.getBoundingClientRect()
-    const cx = rect.left + rect.width / 2
+    /* Hearts explosion */
+    const rect = wrapper.getBoundingClientRect()
+    const cx = rect.left + rect.width  / 2
     const cy = rect.top  + rect.height / 2
 
-    for (let i = 0; i < 20; i++) {
+    const emojis = ["💙","💜","🩷","💗","💖","✨","🌸"]
+    for (let i = 0; i < 24; i++) {
       setTimeout(() => {
-        const heart = document.createElement("span")
-        heart.innerHTML = ["💙","💜","🩷","💗","✨"][Math.floor(Math.random()*5)]
-        const angle = Math.random() * 360
-        const dist  = 80 + Math.random() * 120
-        const dx = Math.cos(angle * Math.PI/180) * dist
-        const dy = Math.sin(angle * Math.PI/180) * dist
-        const size = 20 + Math.random() * 24
+        const h = document.createElement("span")
+        h.innerHTML = emojis[Math.floor(Math.random() * emojis.length)]
+        const angle = (i / 24) * 360 + Math.random() * 20
+        const dist  = 100 + Math.random() * 140
+        const dx = Math.cos(angle * Math.PI / 180) * dist
+        const dy = Math.sin(angle * Math.PI / 180) * dist
+        const size = 22 + Math.random() * 20
 
-        heart.style.cssText = `
-          position: fixed;
-          left: ${cx}px; top: ${cy}px;
-          font-size: ${size}px;
-          pointer-events: none;
-          z-index: 99998;
-          transform: translate(-50%,-50%);
-          transition: transform 1.2s cubic-bezier(0.34,1.56,0.64,1), opacity 1.2s ease;
-          opacity: 1;
+        h.style.cssText = `
+          position:fixed;
+          left:${cx}px; top:${cy}px;
+          font-size:${size}px;
+          pointer-events:none;
+          z-index:99998;
+          transform:translate(-50%,-50%);
+          transition: transform 1.4s cubic-bezier(0.34,1.56,0.64,1), opacity 1.4s ease;
+          opacity:1;
         `
-        document.body.appendChild(heart)
+        document.body.appendChild(h)
         requestAnimationFrame(() => {
-          heart.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`
-          heart.style.opacity = "0"
+          h.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.5)`
+          h.style.opacity   = "0"
         })
-        setTimeout(() => heart.remove(), 1400)
-      }, i * 40)
+        setTimeout(() => h.remove(), 1600)
+      }, i * 35)
     }
 
-    /* Special message overlay */
-    const msg = document.createElement("div")
-    msg.style.cssText = `
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(20px, 5vw, 28px);
-      color: white;
-      text-shadow: 0 0 30px rgba(255,150,200,0.8);
-      text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.5);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      z-index: 10;
-      border-radius: 20px;
+    /* Message overlay on canvas */
+    const overlay = document.createElement("div")
+    overlay.style.cssText = `
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      flex-direction: column;
+      gap: 8px;
+      font-family:'Playfair Display',serif;
+      color:white;
+      text-align:center;
+      padding:24px;
+      background:rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      opacity:0;
+      transition:opacity 0.5s ease;
+      z-index:10;
+      border-radius:20px;
     `
-    msg.innerHTML = "Tu ne heart banaya… 💙<br><span style='font-size:0.6em;opacity:0.8;'>Main samajh gaya. 😄</span>"
-    wrapper.appendChild(msg)
-    setTimeout(() => { msg.style.opacity = "1" }, 200)
+    overlay.innerHTML = `
+      <div style="font-size:clamp(22px,5vw,32px);text-shadow:0 0 30px rgba(255,150,200,0.9)">Tu ne heart banaya… 💙</div>
+      <div style="font-size:clamp(14px,3vw,18px);opacity:0.75">Main samajh gaya. 😄</div>
+    `
+    wrapper.appendChild(overlay)
+    setTimeout(() => { overlay.style.opacity = "1" }, 200)
     setTimeout(() => {
-      msg.style.opacity = "0"
-      setTimeout(() => msg.remove(), 600)
-    }, 3500)
+      overlay.style.opacity = "0"
+      setTimeout(() => overlay.remove(), 600)
+    }, 3800)
 
-    /* Reset after 4 sec so can detect again */
+    /* Reset for next attempt */
     setTimeout(() => {
       heartDetected = false
-      status.textContent = "Phir se try karo! ✍️"
+      pathHistory   = []
+      status.textContent = "☝️ Phir se draw karo!"
     }, 5000)
   }
 
-  /* === START === */
-  setupMediaPipe()
+  /* === GO === */
+  setup()
 }
