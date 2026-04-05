@@ -783,6 +783,46 @@ function showDearDobiLetter(container) {
   }
 
   setTimeout(typeLetterLine, 800)
+
+  // AirDraw button — letter khatam hone ke baad aata hai
+  setTimeout(() => {
+    const airBtn = document.createElement("button")
+    airBtn.id = "airDrawBtn"
+    airBtn.innerHTML = "✋ Hawa mein draw karo!"
+    airBtn.style.cssText = `
+      display: block;
+      margin: 28px auto 0;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #a78bfa, #ff6eb4);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(167,139,250,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeUp 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      opacity: 0;
+    `
+    airBtn.onmouseover = () => {
+      airBtn.style.transform = "scale(1.05) translateY(-2px)"
+      airBtn.style.boxShadow = "0 8px 30px rgba(167,139,250,0.6)"
+    }
+    airBtn.onmouseout = () => {
+      airBtn.style.transform = ""
+      airBtn.style.boxShadow = "0 4px 20px rgba(167,139,250,0.4)"
+    }
+    airBtn.onclick = () => {
+      if (typeof initAirDraw === "function") {
+        initAirDraw()
+      } else {
+        console.error("AirDraw not loaded")
+      }
+    }
+    letterPage.appendChild(airBtn)
+  }, (letterLines.length * 1200) + 2000)
 }
 
 /* === FINAL PAGE === */
