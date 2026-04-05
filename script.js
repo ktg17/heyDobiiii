@@ -788,23 +788,24 @@ function showDearDobiLetter(container) {
   setTimeout(() => {
     const airBtn = document.createElement("button")
     airBtn.id = "airDrawBtn"
-    airBtn.innerHTML = "✋ Hawa mein draw karo!"
+    airBtn.innerHTML = "🎁 Click here for a surprise!"
     airBtn.style.cssText = `
       display: block;
-      margin: 28px auto 0;
-      padding: 14px 32px;
+      margin: 32px auto 80px;
+      padding: 16px 36px;
       background: linear-gradient(135deg, #a78bfa, #ff6eb4);
       border: none;
       border-radius: 50px;
       color: white;
       font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 500;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(167,139,250,0.4);
+      box-shadow: 0 4px 24px rgba(167,139,250,0.5);
       transition: transform 0.2s, box-shadow 0.2s;
-      animation: fadeUp 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
-      opacity: 0;
+      opacity: 1;
+      position: relative;
+      z-index: 10;
     `
     airBtn.onmouseover = () => {
       airBtn.style.transform = "scale(1.05) translateY(-2px)"
